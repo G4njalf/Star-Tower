@@ -5,8 +5,8 @@ using namespace std;
 
 struct coordinates
 {
-    int x;
-    int y;
+    int columns;
+    int rows;
 };
 
 struct terminal
@@ -23,43 +23,77 @@ struct door
 
 typedef WINDOW *Pwindow;
 
-class Map
+class Room
 {
 private:
     terminal sizet;
-    Pwindow map;
+    Pwindow room;
+    int layout; 
+    door doorx;
 public:
-    Map(Pwindow map, terminal sizet)
+    Room(Pwindow room, terminal sizet, int layout, door doorx)
     {
-        this->map = map;
+        this->doorx.isOpen = doorx.isOpen;
+        this->room = room;
         this->sizet = sizet;
-        this->map = newwin(this->sizet.rows,this->sizet.columns,0,0);
-        nodelay(this->map,true);
+        this->room = newwin(this->sizet.rows,this->sizet.columns,0,0);
+        this->layout = layout;
+        nodelay(this->room,true);
         refresh();
-        box(this->map,0,0);
-        wrefresh(this->map);
+        box(this->room,0,0);
+        wrefresh(this->room);
         refresh();
-    }
-    void borders()
-    {
-        coordinates cord;
-        cord.x = 40;
-        cord.y = 15;    
-        mvwvline(map,cord.y,cord.x,0,200);
-        refresh();
-        //mvprintw(cord.y,cord.x,"q");
-        wrefresh(map);
-    }
 
+        borders(layout);
+    }
+    // a seconda del numero(layout) crei un layout di stanza diverso
+    void borders(int layout)
+    {
+        if (layout == 0)
+        {
+            //muri
+            coordinates cord;
+            cord.columns = 26;
+            cord.rows = 1;    
+            mvwvline(room,cord.rows,cord.columns,0,8); //muovi poi disegni riga verticale nella finestra (fuori non si vede)
+            mvwvline(room,cord.rows+3,cord.columns+26,0,8);
+            cord.columns = 39;
+            cord.rows = 12;
+            mvwvline(room,cord.rows,cord.columns,0,11);
+            cord.columns = 27;
+            cord.rows = 12;
+            mvwhline(room,cord.rows,cord.columns,0,25);
+            //porta da uscire
+            if (!doorx.isOpen)
+            {
+                cord.columns = 42;
+                cord.rows = 23;
+                mvwhline(room,cord.rows,cord.columns,88,5);
+            }
+            else
+            {
+                cord.columns = 42;
+                cord.rows = 23;
+                mvwhline(room,cord.rows,cord.columns,' ',5);
+            }
+            //porta da cui è entrato
+            cord.columns = 10;
+            cord.rows = 23;
+            mvwhline(room,cord.rows,cord.columns,' ',5);
+            wrefresh(room);
+        }
+    }
 };
 
-class Room : public Map
+
+
+/*class Map : public Room // lista di room?
 {
 private:
     
 public:
-    Room(Pwindow map, terminal sizet) : Map(map,sizet)
+    Map(Pwindow room, terminal sizet, int layout, door doorx) : Room(room,sizet,layout,doorx)
     {
         
     }
-};
+};*/

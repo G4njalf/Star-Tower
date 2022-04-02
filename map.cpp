@@ -13,16 +13,17 @@ void reset()
     endwin();
 }
 
-Pwindow map;
+Pwindow room;
 terminal cordi;
-
+door porta;
 int main()
 {
     init();
     cordi.columns = 80;
     cordi.rows = 24;
-    Map mappa = Map(map,cordi);
-    mappa.borders();
+    porta.isOpen = false;
+    Room Roompa = Room(room,cordi,0,porta);
+    //Roompa.borders();
     int ch = getch();
     while (ch == 'v')
     {
