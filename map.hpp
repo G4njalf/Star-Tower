@@ -82,8 +82,40 @@ public:
             mvwhline(room,cord.rows,cord.columns,' ',5);
             wrefresh(room);
         }
+        if (layout == 1)
+        {
+            //muri
+            coordinates cord;
+            cord.columns = 1;
+            cord.rows = 12;    
+            mvwhline(room,cord.rows,cord.columns,0,78-5);
+            cord.columns = 40;
+            cord.rows = 1+3;    
+            mvwvline(room,cord.rows,cord.columns,0,23-6);
+
+            //porta da uscire (5 spazi se hor , 3 spazi se ver)
+            if (!doorx.isOpen)
+            {
+                cord.columns = 10;
+                cord.rows = 23;
+                mvwhline(room,cord.rows,cord.columns,88,5);
+            }
+            else
+            {
+                cord.columns = 10;
+                cord.rows = 23;
+                mvwhline(room,cord.rows,cord.columns,' ',5);
+            }
+            //porta da cui è entrato
+            cord.columns = 10;
+            cord.rows = 0;
+            mvwhline(room,cord.rows,cord.columns,' ',5);
+            wrefresh(room);    
+        }
+        
     }
 };
+
 
 
 
