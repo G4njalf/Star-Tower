@@ -1,26 +1,18 @@
 #include"map.hpp"
+#include"utility.hpp"
+#include<iostream>
 #include<thread>
+using namespace std;
 
-Pwindow room;  // stanza
-terminal sizet; // grandezza della stanza
-door porta; //dati porte
-int layout; //tipo di layout
-
-void init()
-{
-    initscr();
-    noecho();
-    cbreak();
-}
-
-void reset()
-{
-    endwin();
-}
+//actual
+Pwindow acroom;  // stanza
+terminal acsizet; // grandezza della stanza
+door acporta;
+int aclayout; //tipo di layout
 
 struct mappa
 {
-    Room val = Room(room,sizet,layout,porta);
+    Room val = Room(acroom,acsizet,aclayout,acporta);
     mappa* next;
     mappa* prev;
 };
@@ -51,14 +43,64 @@ pmappa tail_insert(pmappa head, Room el)
 
 int main()
 {
+    //inizializzo lib
     init();
-    sizet.columns = 80;
-    sizet.rows = 24;
-    porta.isOpen = false;
-    Room Roompa = Room(room,sizet,0,porta);
+    //assegno dimensioni stanza
+    acsizet.columns = 80;
+    acsizet.rows = 24;
+    //Room Room1 = Room(room,sizet,0,porta);
     //Roompa.borders();
-    int ch = getch();
-    while (ch == 'v')
+
+    pmappa head = NULL;
+    head = tail_insert(head,StanzaRandom());
+    head->val.draw();
+    int counter = 1; //conta quante stanze
+    int maxStanze = 5; //massimo numero di stanze
+    //main cycle
+    while (true)
+    {   
+        int ch =  getch();
+        if (ch == 'v')
+        {
+            break;
+        }
+        
+        if (ch == 'a') // torno indietro nella mappa
+        {
+            if (head->prev != NULL)
+            {
+                head->prev->val.draw();
+            }
+            else
+            {
+                ch = getch();
+            }
+        }
+        if (ch == 's') //vado avanti nella mappa
+        {
+            if (counter < maxStanze && head->next == NULL)
+            {
+                head = tail_insert(head,StanzaRandom());
+                head->val.draw();
+                counter++;
+            }
+            else if (head->next != NULL)
+            {
+                head->next->val.draw();
+            }
+            if (counter >= maxStanze)
+            {
+                ch = getch();
+            }
+        }      
+    }
+    
+
+    cout<<counter;
+
+
+    int end = getch();
+    while (end == 'v')
     {
         reset();
         break;
