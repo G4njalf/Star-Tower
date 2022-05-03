@@ -9,7 +9,7 @@ LOG:
 - prima versione di visita e generazione della lista e conseguente stampa della stanza con layout randomico (0/1)
 - suca
 - piedi
-- punto 3 è megabuggato forse va messo qualcosa a riga 43 di map .hpp
+- punto 3 è megabuggato forse va messa la funzione magica che cancella tutto a riga 43 di map.hpp
 
 
 
