@@ -51,7 +51,7 @@ public:
     }
     int muovi() {
         int movimento = wgetch(window);             //switch che serve a rivelare il tasto premuto dal giocatore
-        switch (movimento) {                        //con i primi 4 casi si esegue il movimento del personaggio
+        switch (movimento) {                        //con i primi 4 case si esegue il movimento del personaggio
             case 'w':                               //con le KEY si spara, infine con le lettere maiuscole si fanno
                 su();                               //le capriole (si incrementa il movimento di 3 e non di 1)
                 break;
@@ -95,7 +95,7 @@ public:
     }
     void disegna (){
         wattron(window, COLOR_PAIR(2));
-        mvwaddch (window, currY, currX, carattere);
+        mvwaddch (window, currY, currX, carattere);         //attivo i colori e disegno
         wattroff(window, COLOR_PAIR(2));
     }
     int cy (){                  //ritorna la posizione attuale nelle y
@@ -113,7 +113,7 @@ public:
             vita = vita - dannobomba;
         }
     }*/
-    void incrementavita (int b){
+    void incrementavita (int b){            //funzioni usate per l'interazione col personaggio
             vita = vita + b;
     }
 
@@ -126,7 +126,7 @@ public:
             int tmp = currY;
             for (int i=0; i<5; i++){
                 currY--;
-                if (currY == 2){
+                if (currY == 2){                                        //funzioni degli spari, da sistemare bug del muro
                     mvwaddch (window, currY, currX, '"');
                     wrefresh(window);
                     i++;
@@ -244,7 +244,6 @@ public:
             napms(100);
             mvwaddch(window, currY, currX, ' ');
             currY--;
-            //   capriola = true;
         }
     }
 
@@ -262,7 +261,6 @@ public:
             napms(100);
             mvwaddch(window, currY, currX, ' ');
             currY++;
-            //   capriola = true;
         }
     }
 
@@ -280,7 +278,6 @@ public:
             napms(100);
             mvwaddch(window, currY, currX, ' ');
             currX++;
-            // capriola = true;
         }
     }
 
@@ -298,7 +295,6 @@ public:
             napms(100);
             mvwaddch(window, currY, currX, ' ');
             currX--;
-            //  capriola = true;
         }
     }
 };

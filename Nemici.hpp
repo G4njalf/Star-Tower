@@ -40,13 +40,13 @@ public:
             if (y==posY && x-1==posX || y==posY && x+1==posX || y-1==posY && x==posX || y+1==posY && x==posX) {
                 beep();
                 esplode(win);            //vede se la bomba e il pers hanno la stessa posizione, se si la bomba
-                p.danneggia(danno);
+                p.danneggia(danno);      //esplode
                 controllo=true;
             }
             return controllo;
         }
 
-        void esplode(WINDOW *win) {                    //colora lo bomba di rosso se triggerata
+        void esplode(WINDOW *win) {                     //colora lo bomba se triggerata
             init_pair(4, COLOR_YELLOW, COLOR_BLACK);
             init_pair(5, COLOR_RED, COLOR_WHITE);
             int colore=4;
@@ -93,7 +93,7 @@ public:
                   wrefresh(win);
               }
               wattroff(win, COLOR_PAIR(1));*/
-            for (int j=0; j<8; j++){
+            for (int j=0; j<8; j++){                            //disegno l'effetto esplosione modificando le x e le y
 
                 if(j==0) {
                     mvwprintw(win, posY, posX, "+");
@@ -133,7 +133,7 @@ public:
             wrefresh(win);
         }
 
-        void muovi(WINDOW * win){
+        void muovi(WINDOW * win){                       //viene mosso random
             int origx = posX;
             int origy = posY;
             int uno=0;
@@ -144,7 +144,7 @@ public:
                     int random = rand()%2;
                     mvwaddch (win, posY, posX, ACS_BLOCK);
                     wrefresh(win);
-                    if (random == 0){
+                    if (random == 0){                           //se il random da questo valore lo zero aumenta, se no aumenta uno
                         zero++;
                         mvwaddch (win, posY, posX, ' ');
                         posX++;
@@ -161,8 +161,8 @@ public:
                         napms(200);
                     }
                 }
-                    for (int j=0; j!=zero; j++){
-                        mvwaddch (win, posY, posX, ' ');
+                    for (int j=0; j!=zero; j++){                    //torno indietro dei valori che zero ha assunto,
+                        mvwaddch (win, posY, posX, ' ');            //dopo faccio lo stesso con uno
                         posX--;
                         mvwaddch (win, posY, posX, ACS_BLOCK);
                         wrefresh(win);
