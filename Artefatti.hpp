@@ -1,6 +1,6 @@
 #include <ncurses.h>
 //#include "Personaggio.hpp"
-using namespace std;
+//using namespace std;
 
 class artefatto{
 private:
@@ -29,10 +29,13 @@ public:
     hpup (int y, int x, int b) : artefatto (y, x){
         bonus = b;
     }
-   void raccolto (personaggio p){                   //controlla se e' sopra all'artefatto, se si aggiunge il bonus.
+   bool raccolto (personaggio p){                   //controlla se e' sopra all'artefatto, se si aggiunge il bonus.
         if (cy()==p.cy() && cx()==p.cx()){
-            p.power1(bonus);
+            flash();
+            p.incrementavita(bonus);
+         //  p.cl() == p.cl()+bonus;
         }
+        return 1;
     }
     int aggbonus(){
         return bonus;
