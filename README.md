@@ -14,6 +14,7 @@ LOG:
 
 
 DA FARE:
+- aggiungere identificativo stanze (int) es. se chiedo di stampare stanza n.7 se ho la stanza n.7 la stampa
 - n layout preimpostati  (mo ce ne stanno 2) ((aggiungere piu porte per adeguarsi alla struttura dati))
 - struttura dati di tipo albero al posto di lista bidirezionale
   ma da testare ((sopratutto l associazione dell elemento che non è un intero ma una classe ahah)) (MAX 2 PORTE PER STANZA)
