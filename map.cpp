@@ -9,10 +9,11 @@ Pwindow acroom;  // stanza
 terminal acsizet; // grandezza della stanza
 door acporta;
 int aclayout; //tipo di layout
+int acId;
 
 struct mappa
 {
-    Room val = Room(acroom,acsizet,aclayout,acporta);
+    Room val = Room(acroom,acsizet,aclayout,acporta,acId);
     mappa* next;
     mappa* prev;
 };
@@ -56,6 +57,7 @@ int main()
     head->val.draw();
     int counter = 1; //conta quante stanze
     int maxStanze = 5; //massimo numero di stanze
+    int identificativo = 1;
     //main cycle
     while (true)
     {   
@@ -69,7 +71,10 @@ int main()
         {
             if (head->prev != NULL)
             {
-                head->prev->val.draw();
+                head = head->prev;
+                head->val.draw();
+                //head = head->prev;
+                identificativo--;
             }
             else
             {
@@ -83,10 +88,13 @@ int main()
                 head = tail_insert(head,StanzaRandom());
                 head->val.draw();
                 counter++;
+                identificativo++;
             }
             else if (head->next != NULL)
             {
-                head->next->val.draw();
+                head = head->next;
+                head->val.draw();
+                identificativo++;
             }
             if (counter >= maxStanze)
             {
@@ -96,7 +104,7 @@ int main()
     }
     
 
-    cout<<counter;
+    cout<<counter<<identificativo;
 
 
     int end = getch();
