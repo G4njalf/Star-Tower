@@ -1,7 +1,7 @@
 #include<ncurses.h>
 #include<cstdlib>
 #include<ctime>
-#include"layouts.hpp"
+#include"draw.hpp"
 using namespace std;
 
 struct terminal
@@ -37,7 +37,7 @@ public:
 
         //draw(layout);
     }
-    // a seconda del numero(layout) crei un layout di stanza diverso
+
     void draw()
     {
         refresh();
@@ -45,6 +45,7 @@ public:
         werase(room);
         box(this->room,0,0);
         coordinates cord;
+        wavefunctioncollapse();
         layouts(layout,room,cord,doorx);    
     };
 };
