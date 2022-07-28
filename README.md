@@ -8,6 +8,7 @@ LOG:
   una volta interrotta l esecuzione viene stampato il numero delle stanze diverse visitate (counter) e a che profondita dell albero ci si trovava al momento
   (profondita)
   NOTA: l'ho chiamata head ma non è la testa dell albero, è dove mi trovo al momento
+- distinzone porte di uscita
 
 LOG:
 260722:
@@ -24,8 +25,7 @@ LOG:
 
 
 DA FARE:
-- aggiungere identificativo stanze (int) es. se chiedo di stampare stanza n.7 se ho la stanza n.7 la stampa
+- aggiungere identificativo stanze (int) es. se chiedo di aprire la porta di sinstra della stanza 7 la apre
 - aggiungere layout(oppure implementare algoritmo wave function collapse) , adeguare layouts ad avere 2 porte di uscita
-- differenziare le 2 porte di uscita perche una manda a sinistra l altra a destra, la porta di entrata rimanda sempre al genitore del nodo
 - tracciamento di entità, artefatti, condizione delle porte (direttamente sulla lista?)
 - collisioni?
