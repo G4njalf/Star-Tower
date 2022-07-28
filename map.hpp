@@ -24,7 +24,7 @@ public:
     Room(Pwindow room, terminal sizet, int layout, door doorx, int id)
     {
         this->id = id;
-        this->doorx.exitDisOpen = doorx.exitDisOpen;
+        this->doorx = doorx;
         this->room = room;
         this->sizet = sizet;
         //this->room = newwin(this->sizet.rows,this->sizet.columns,0,0);
@@ -59,9 +59,10 @@ Room StanzaRandom()
     int identificativo;
     sizet.columns = 80;
     sizet.rows = 24;
-    porta.exitDisOpen = false;
+    porta.LeftExitOpen = false;
+    porta.RightExitOpen = true;
     srand((unsigned)time(0));
-    layout = rand() % 6;
+    layout = rand() % 2;
     Pwindow room = newwin(sizet.rows,sizet.columns,0,0);
     Room SRandom = Room(room,sizet,layout,porta,identificativo);
     return SRandom;
