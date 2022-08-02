@@ -2,4 +2,4 @@
 
 Map(orcodio) ------- mo la devo commentare e cmq non cagatela ancora
 
--Manu: ho caricato il file .h della classe del personaggio che si muove con le frecce direzionali e che spara direzionalmente con WASD. E il main per testare la classe.
+-Manu 02/08: ho aggiornato i file in cui ho implementato anche la collisione tra player e nemico (anche se è da finire)
