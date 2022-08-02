@@ -308,6 +308,7 @@ public:
                     else if (current == 6) {
                         move(21, 2);
                         clrtoeol();
+                        move(17, 2);
                         refresh();
                         options=false;
                     }
@@ -316,6 +317,9 @@ public:
                     break;
             }
             position2();
+            if(current==6 && push==10){
+                break;
+            }
         }
     }
     bool return_effetti(){
