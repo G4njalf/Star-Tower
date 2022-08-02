@@ -1,74 +1,27 @@
 #include <ncurses.h>
-#include "player.h"
-#include "enemy.h"
-
+using namespace std;
+#include "shooting_player.h"
 
 
 int main(){
-    
-    initscr();
-    noecho();
-    curs_set(0);
 
-    WINDOW *field=newwin(15, 40, 10, 10);
+    cbreak();
+
+    int y, x;
+    getmaxyx(stdscr, y, x);
+    WINDOW* win;
     refresh();
-    box(field, 0, 0);
-    wrefresh(field);
-    keypad(field, TRUE);
-    nodelay(field, true);
-    int yMax;
-    int xMax;
-    getmaxyx(field, yMax, xMax);
+    
+    shooting_player object=shooting_player(win,y/3, x/3);
 
-    //creo struct player
-    entity P;
-    P.x=20;
-    P.y=10;
-    P.symbol='P';
-    //creo oggetto player
-    player giocatore=player(field, P);
+    object.init();
 
-    //creo struct enemy
-    entity E;
-    E.x=30;
-    E.y=10;
-    E.symbol='@';
-    //creo oggetto enemy
-    enemy nemico=enemy(field, E);
+    object.create_win_box();
+    object.player();
+    object.getmove();
+    
 
 
-    while(1){
-        //handle input
-        napms(150);
-        int input=wgetch(field);
-
-        //update stuff and erase player and enemy
-        giocatore.erase_entity(P, field);
-        nemico.erase_entity(E, field);
-        giocatore.update_player(P, input);
-        nemico.update_enemy(E);
-        if(E.y>=yMax-1) E.y=yMax-2;
-        else if (E.y<=0) E.y=1;
-        if (E.x>=xMax-1) E.x= xMax-2;
-        else if (E.x<=0) E.y=1;
-
-
-        //print stuff
-        giocatore.draw_entity(P, field);
-        nemico.draw_entity(E, field);
-    };
-
-
-
-
-
-
-
-
-
-
-
-
-    getch();
-    endwin();
+    object.end();
+    
 }
