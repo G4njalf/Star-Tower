@@ -13,14 +13,26 @@ class enemy{
             this->E=E;
         };
 
-        void update_enemy(entity &E){
+        void update_enemy(WINDOW* field, entity &E){
             srand(time(0));
             int a=rand();
 
+            //aggiornamento coordinate enemy
             if(a%10<3) E.x--;
             else if (a%10>2 && a%10<6) E.x++;
             else if (a%10>5 && a%10<8) E.y--;
             else if (a%10>7 && a%10<10) E.y++;
+
+
+            //imposto margini mappa
+            int yMax;
+            int xMax;
+            getmaxyx(field, yMax, xMax);
+            if(E.y>=yMax-1) E.y=yMax-2;
+            else if (E.y<=0) E.y=1;
+            if (E.x>=xMax-1) E.x= xMax-2;                                 
+            else if (E.x<=0) E.y=1;
+
         };
         void draw_entity(entity p, WINDOW*win){
             mvwaddch(win, p.y, p.x, p.symbol);
