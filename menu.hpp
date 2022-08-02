@@ -4,7 +4,7 @@
 #define length 25
 using namespace std;
 
-class menu1{
+class menu1{                        //la prima classe e' quella dell'homepage
 protected:
     bool options, newgame, exit;
     int  current;
@@ -59,7 +59,7 @@ public:
                 wattroff(win, A_UNDERLINE);
                 j=48;
                 for (int i=1; i<13; i++) {
-                    mvwprintw(win, 1, i, " ");
+                    mvwprintw(win, 1, i, " ");              //cancello i trattini
                     mvwprintw(win, 1, j, " ");
                     napms(70);
                     wrefresh(win);
@@ -81,10 +81,10 @@ public:
 
     void muovi1(WINDOW* window){
     while((push = wgetch(win))!='x' && !options){
-        switch(push){                       //verifico la posizione del cursore
+        switch(push){                                //verifico la posizione del cursore
             case KEY_UP:
                 current--;
-                if(current==0){             //varia il current se muovi la freccia su o giu'
+                if(current==0){                       //varia il current se muovi la freccia su o giu'
                     current=1;
                 }
                 break;
@@ -94,7 +94,7 @@ public:
                     current=3;
                 }
                 break;
-            case 10:
+            case 10:                            //se premuto enter in base alla posizione in cui sei esegue diverse operazioni
                 if(current==1){
                     newgame=true;
                 }
@@ -124,12 +124,12 @@ public:
     bool return_exit() {
         return exit;
     }
-    void cancella(){
+  /*  void cancella(){                      //non in utilizzo, la tengo per sicurezza       
         werase(win);
         wrefresh(win);
         clear();
         refresh();
-    }
+    }*/
 };
 
 class menu2 : public menu1{
@@ -237,7 +237,7 @@ public:
         wrefresh(win);
         keypad(win, TRUE);
 
-        wattron(win, A_UNDERLINE);
+        wattron(win, A_UNDERLINE);              //sottolineo le parti in cui non si accede con il cursore
         mvwaddstr(win, 5, 2, string1);
         mvwaddstr(win, 12, 2, string5);
         wattroff(win, A_UNDERLINE);
@@ -267,10 +267,10 @@ public:
                 case 10:
                     if (current == 1) {
                         move(21, 2);
-                        clrtoeol();             //cancello la riga corrispondente
+                        clrtoeol();                 //cancello la riga corrispondente
                         difficile = true;
                         mvprintw(21, 2, "hai impostato la difficolta' difficile");
-                        move(3, 21);
+                        move(3, 21);                    //torno alla posizione in cui ero
                         refresh();
                     }
                     else if (current == 2) {
