@@ -50,7 +50,7 @@ public:
     };
 };
 
-Room StanzaRandom()
+Room StanzaRandom(bool leftDoor, bool rightDoor)
 {
     //Pwindow room = newwin(sizet.rows,sizet.columns,0,0);  // stanza
     terminal sizet; // grandezza della stanza
@@ -59,10 +59,11 @@ Room StanzaRandom()
     int identificativo;
     sizet.columns = 80;
     sizet.rows = 24;
-    porta.LeftExitOpen = false;
-    porta.RightExitOpen = true;
+    porta.LeftExitOpen = leftDoor;
+    porta.RightExitOpen = rightDoor;
     srand((unsigned)time(0));
-    layout = rand() % 2;
+    layout = rand() % 4;
+    //layout = 1;
     Pwindow room = newwin(sizet.rows,sizet.columns,0,0);
     Room SRandom = Room(room,sizet,layout,porta,identificativo);
     return SRandom;

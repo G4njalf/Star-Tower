@@ -154,7 +154,7 @@ int main()
 
     bool where;
     pmappaAlbero head = NULL;
-    head = create(head,StanzaRandom(),where);
+    head = create(head,StanzaRandom(0,0),where);
     head->val.draw();
     int counter = 1; //conta quante stanze
     int maxStanze = 5; //massimo numero di stanze
@@ -187,7 +187,7 @@ int main()
             if (counter < maxStanze && head->left == NULL)
             {
                 where = true;
-                head = create(head,StanzaRandom(),where);
+                head = create(head,StanzaRandom(0,0),where);
                 head->val.draw();
                 counter++;
                 profondita++;
@@ -208,7 +208,7 @@ int main()
             if (counter < maxStanze && head->right == NULL)
             {
                 where = false;
-                head = create(head,StanzaRandom(),where);
+                head = create(head,StanzaRandom(0,0),where);
                 head->val.draw();
                 counter++;
                 profondita++;
