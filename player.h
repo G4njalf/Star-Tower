@@ -6,7 +6,11 @@ struct entity{
     int x;
     char symbol;
     int hearts;
+    int y_bullet;
+    int x_bullet;
 };
+
+
 
 
 class player{
@@ -66,6 +70,7 @@ class player{
 
         void collision(entity p, entity e, int &hearts){
             if(p.x==e.x&&p.y==e.y) hearts--;
+            if(p.x==e.x_bullet&&p.y==e.y_bullet||p.x==e.x_bullet-1&&p.y==e.y_bullet) hearts--;
         };
 
         void print_hearts(WINDOW*win, entity p){
