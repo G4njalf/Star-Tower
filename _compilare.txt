@@ -1,0 +1,4 @@
+- apri ubuntu
+- cd mnt/c/users/lenovo/desktop/universita/programmazione/progetto
+- g++ map.cpp -lncurses -o map (compila (in questo caso map.cpp) e crea eseguibile in questo caso map.exe) 
+- ./map (esegue in questo caso map.exe se esiste)

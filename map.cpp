@@ -2,6 +2,7 @@
 #include"utility.hpp"
 #include<iostream>
 #include<thread>
+#include"menuTURRO.hpp"
 using namespace std;
 
 //actual
@@ -90,78 +91,24 @@ pmappaAlbero create(pmappaAlbero radix, Room el, bool where)
 
 int main()
 {
+    bool exit = menu(); //commentare per togliere il menu
     //inizializzo lib
     init();
     //assegno dimensioni stanza
     acsizet.columns = 80;
     acsizet.rows = 24;
-    //Room Room1 = Room(room,sizet,0,porta);
-    //Roompa.borders();
-
-    /*pmappa head = NULL;
-    head = tail_insert(head,StanzaRandom());
-    head->val.draw();
     int counter = 1; //conta quante stanze
-    int maxStanze = 5; //massimo numero di stanze
-    int identificativo = 1;
-    //main cycle
-    while (true)
-    {   
-        int ch =  getch();
-        if (ch == 'v')
-        {
-            break;
-        }
-        
-        if (ch == 'a') // torno indietro nella mappa
-        {
-            if (head->prev != NULL)
-            {
-                head = head->prev;
-                head->val.draw();
-                //head = head->prev;
-                identificativo--;
-            }
-            else
-            {
-                ch = getch();
-            }
-        }
-        if (ch == 's') //vado avanti nella mappa
-        {
-            if (counter < maxStanze && head->next == NULL)
-            {
-                head = tail_insert(head,StanzaRandom());
-                head->val.draw();
-                counter++;
-                identificativo++;
-            }
-            else if (head->next != NULL)
-            {
-                head = head->next;
-                head->val.draw();
-                identificativo++;
-            }
-            if (counter >= maxStanze)
-            {
-                ch = getch();
-            }
-        }      
-    }
-    
+    int maxStanze = 20; //massimo numero di stanze
+    int profondita = 0; //profondita dell albero della mappa
 
-    cout<<counter<<identificativo; */
-
-    bool where;
-    pmappaAlbero head = NULL;
-    head = create(head,StanzaRandom(0,0),where);
-    head->val.draw();
-    int counter = 1; //conta quante stanze
-    int maxStanze = 5; //massimo numero di stanze
-    int profondita = 1;
     //main cycle
-    while (true)
+    while (!exit) // !exit con menu // true senza menu
     {   
+        bool where;
+        pmappaAlbero head = NULL;
+        head = create(head,StanzaRandom(0,0),where);
+        head->val.draw();
+      
         int ch =  getch();
         if (ch == 'v')
         {
@@ -228,6 +175,7 @@ int main()
     
 
     cout<<counter<<profondita;
+    
 
     int end = getch();
     while (end == 'v')
