@@ -17,7 +17,7 @@ void colori(){
     init_pair(3, COLOR_MAGENTA, COLOR_BLACK);
 }
 
-void scrittagameover(personaggio prot, WINDOW * win){       //scrive la scritta gameover una lettera alla volta
+/*void scrittagameover(personaggio prot, WINDOW * win){       //scrive la scritta gameover una lettera alla volta
     wattron (win, COLOR_PAIR(3));
     char A[8] = {'G','A', 'M','E','O','V','E','R'};
     int x = 20;
@@ -31,8 +31,8 @@ void scrittagameover(personaggio prot, WINDOW * win){       //scrive la scritta 
     wrefresh(win);
 }
 
-void sparare(personaggio prot, WINDOW* win, int movimento){
-    if(movimento==KEY_UP){
+void sparare(personaggio prot, WINDOW* win, int movimento){             //questa funzione aggiunge un bug, dopo che si spara
+    if(movimento==KEY_UP){                                              //la posizione del personaggio torna dov'era prima della funzione
         sparo *proiettile = new sparo(prot.cy(), prot.cx(), '.', win);
         while(!proiettile->return_ostacolo()) {
             int movimento2 = wgetch(win);
@@ -104,7 +104,7 @@ void sparare(personaggio prot, WINDOW* win, int movimento){
         proiettile->cancella2();
         delete proiettile;
     }
-}
+}*/
 
 int main (){
     inizio();
