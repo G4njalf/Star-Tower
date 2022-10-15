@@ -76,21 +76,30 @@ void map(bool exit)
     int maxStanze = 20; //massimo numero di stanze
     int profondita = 0; //profondita dell albero della mappa
     int id = 0; //identificatore
-
+    bool where;
+    pmappaAlbero head = NULL;
+    Pwindow room = newwin(acsizet.rows,acsizet.columns,0,0);
+    head = create(head,StanzaRandom(1,0,room),where,id);
+    head->val.draw();
+    mvaddstr(21,1,"first");
+    wrefresh(room);
+    player(room,head->val.getcoordinates(),head->val.layout);
     //main cycle
     while (!exit) // !exit con menu // true senza menu
     {   
-        bool where;
-        pmappaAlbero head = NULL;
-        Pwindow room = newwin(acsizet.rows,acsizet.columns,0,0);
-        head = create(head,StanzaRandom(1,0,room),where,id);
-        head->val.draw();
-        player(room,head->val.getcoordinates());
-        int ch =  getch();
+        //bool where;
+        //pmappaAlbero head = NULL;
+        //Pwindow room = newwin(acsizet.rows,acsizet.columns,0,0);
+        //head = create(head,StanzaRandom(1,0,room),where,id);
+        //head->val.draw();
+        //mvaddch(10,10,'x');
+        //refresh();
+        //player(room,head->val.getcoordinates(),head->val.layout);
+        /*int ch =  getch();
         if (ch == 'v')
         {
             break;
-        }
+        }*/
         
         if (changemap(head->val.layout,getcury(room),getcurx(room)) == 0) // torno indietro nella mappa
         {
@@ -98,12 +107,16 @@ void map(bool exit)
             {
                 head = head->parent;
                 head->val.draw();
-                player(room,head->val.getcoordinates());
+                mvwaddstr(room,21,1,"0a");
+                wrefresh(room);
+                player(room,head->val.getcoordinates(),head->val.layout);
                 profondita--;
             }
             else
             {
-                ch = getch();
+                mvaddstr(21,1,"0b");
+                wrefresh(room);
+                player(room,head->val.getcoordinates(),head->val.layout);
             }
         }
         if (changemap(head->val.layout,getcury(room),getcurx(room)) == 1) //vado avanti nella mappa A SINISTRA
@@ -114,7 +127,9 @@ void map(bool exit)
                 room = newwin(acsizet.rows,acsizet.columns,0,0);
                 head = create(head,StanzaRandom(1,0,room),where,id+1);
                 head->val.draw();
-                player(room,head->val.getcoordinates());
+                mvaddstr(21,1,"1a");
+                wrefresh(room);
+                player(room,head->val.getcoordinates(),head->val.layout);
                 counter++;
                 profondita++;
             }
@@ -122,12 +137,16 @@ void map(bool exit)
             {
                 head = head->left;
                 head->val.draw();
-                player(room,head->val.getcoordinates());
+                mvaddstr(21,1,"1b");
+                wrefresh(room);
+                player(room,head->val.getcoordinates(),head->val.layout);
                 profondita++;
             }
             if (counter >= maxStanze)
             {
-                ch = getch();
+                mvaddstr(21,1,"1c");
+                wrefresh(room);
+                player(room,head->val.getcoordinates(),head->val.layout);
             }
         }
         if (changemap(head->val.layout,getcury(room),getcurx(room)) == 2) //vado avanti nella mappa A DESTRA
@@ -138,7 +157,9 @@ void map(bool exit)
                 room = newwin(acsizet.rows,acsizet.columns,0,0);
                 head = create(head,StanzaRandom(1,0,room),where,id+1);
                 head->val.draw();
-                player(room,head->val.getcoordinates());
+                mvaddstr(21,1,"2a");
+                wrefresh(room);
+                player(room,head->val.getcoordinates(),head->val.layout);
                 counter++;
                 profondita++;
             }
@@ -146,17 +167,19 @@ void map(bool exit)
             {
                 head = head->right;
                 head->val.draw();
-                player(room,head->val.getcoordinates());
+                mvaddstr(21,1,"2b");
+                wrefresh(room);
+                player(room,head->val.getcoordinates(),head->val.layout);
                 profondita++;
             }
             if (counter >= maxStanze)
             {
-                ch = getch();
+                mvaddstr(21,1,"2c");
+                wrefresh(room);
+                player(room,head->val.getcoordinates(),head->val.layout);
             }
         }      
     }
-    
-
     cout<<counter<<profondita<<aclayout;
     
 

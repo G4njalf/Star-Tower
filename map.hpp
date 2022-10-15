@@ -55,23 +55,23 @@ public:
         coordinates p;
         if (layout == 0)
         {
-            p.rows = 1;
+            p.rows = 4;
             p.columns = 5;
         }
         else if (layout == 1)
         {
-            p.rows = 1;
+            p.rows = 4;
             p.columns = 5;
         }
         else if (layout == 2)
         {
-            p.rows = 1;
+            p.rows = 4;
             p.columns = 64;
         }
         else if (layout == 3)
         {
             p.rows = 5;
-            p.columns = 76;
+            p.columns = 70;
         }
         return p;
     };
@@ -89,7 +89,7 @@ Room StanzaRandom(bool leftDoor, bool rightDoor, Pwindow room)
     porta.LeftExitOpen = leftDoor;
     porta.RightExitOpen = rightDoor;
     srand((unsigned)time(0));
-    layout = rand() % 1;
+    layout = rand() % 4;
     //Pwindow room = newwin(sizet.rows,sizet.columns,0,0);
     Room SRandom = Room(room,sizet,layout,porta,identificativo);
     return SRandom;

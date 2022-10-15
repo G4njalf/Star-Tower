@@ -6,20 +6,73 @@ bool gameover = false;
 bool chmap = false; // 1 se devi cambiare mappa
 bool bf = true;
 
-void inizio(){
-    initscr();
-    noecho();
-    raw();
-    cbreak();
+int changemap(int layout, int rows, int columns) // 0 == vai indietro // 1 == vai avanti a SX // 2 == vai avanti a DX
+{
+    //layout 0
+    if (layout == 0 && rows >= 20)
+    {
+        return 1; 
+    }
+    else if (layout == 0 && columns >= 77)
+    {
+        return 2;
+    }
+    else if (layout == 0 && rows <= 1)
+    {
+        return 0;
+    }
+    //layout 1
+    else if (layout == 1 && rows <= 1)
+    {
+        return 0;
+    }
+    else if (layout == 1 && columns<= 2)
+    {
+        return 1;
+    }
+    else if (layout == 1 && rows >= 21)
+    {
+        return 2;
+    }
+    //layout 2
+    else if (layout == 2 && rows <= 1)
+    {
+        return 0;
+    }
+    else if (layout == 2 && columns <= 2)
+    {
+        return 1;
+    }
+    else if (layout == 2 && columns >= 77)
+    {
+        return 2;
+    }
+    //layout 3
+    else if (layout == 3 && columns >= 77)
+    {
+        return 0;
+    }
+    else if (layout == 3 && columns <= 2)
+    {
+        return 1;
+    }
+    else if (layout == 3 && rows >= 21)
+    {
+        return 2;
+    }
+    
+    return 100;
+    chmap = false;
+    
 }
 
-void player (WINDOW* win, coordinates p){
-
+void player (WINDOW* win, coordinates p, int layout){
+    chmap = false;
     refresh();
     keypad(win, TRUE);
     personaggio prot(p.rows, p.columns, '&', win);
 
-    while (!gameover || !chmap){    //finchè non c'è un gameover o cambiomappa posso usare il personaggio
+    while (!gameover && !chmap){    //finchè non c'è un gameover o cambiomappa posso usare il personaggio
             wtimeout(win, 80);
             int movimento = wgetch(win);
             //sparare(prot, win, movimento);
@@ -97,80 +150,20 @@ void player (WINDOW* win, coordinates p){
 
                 prot.disegna();
             }
-            
+        
+            if (changemap(layout,getcury(win),getcurx(win)) != 100)
+            {
+                chmap = true;
+                prot.cancella();
+                //mvaddch(10,10,'s');
+                //refresh();
+            }
+            else
+            {
+                chmap = false;
+                //mvaddch(10,10,'n');
+                //refresh();
+            }
         }
 }
 
-int changemap(int layout, int rows, int columns) // 0 == vai indietro // 1 == vai avanti a SX // 2 == vai avanti a DX
-{
-    //layout 0
-    if (layout == 0 && rows >= 20)
-    {
-        return 1;
-        chmap = true;
-        mvaddch(10,10,'w');
-    }
-    else if (layout == 0 && columns >= 77)
-    {
-        return 2;
-        chmap = true;
-        mvaddch(10,10,'w');
-    }
-    else if (layout == 0 && rows <= 1)
-    {
-        return 0;
-        chmap = true;
-    }
-    //layout 1
-    else if (layout == 1 && rows <= 1)
-    {
-        return 0;
-        chmap = true;
-    }
-    else if (layout == 1 && columns<= 1)
-    {
-        return 1;
-        chmap = true;
-    }
-    else if (layout == 1 && rows >= 21)
-    {
-        return 2;
-        chmap = true;
-    }
-    //layout 2
-    else if (layout == 2 && rows <= 1)
-    {
-        return 0;
-        chmap = true;
-    }
-    else if (layout == 2 && columns <= 1)
-    {
-        return 1;
-        chmap = true;
-    }
-    else if (layout == 2 && columns >= 77)
-    {
-        return 2;
-        chmap = true;
-    }
-    //layout 3
-    else if (layout == 3 && columns >= 77)
-    {
-        return 0;
-        chmap = true;
-    }
-    else if (layout == 3 && columns <= 1)
-    {
-        return 1;
-        chmap = true;
-    }
-    else if (layout == 3 && rows >= 21)
-    {
-        return 2;
-        chmap = true;
-    }
-    
-    return 100;
-    chmap = false;
-    
-}
