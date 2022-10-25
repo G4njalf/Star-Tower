@@ -79,26 +79,6 @@ public:
         return movimento;
     }
 
-    void disegna() {
-        mvwaddch(window, currY, currX, carattere);
-        wrefresh(window);
-    }
-    void cancella(){
-        mvwaddch(window, currY, currX, ' ');
-        wrefresh(window);
-    }
-    int cy() {                  //ritorna la posizione attuale nelle y
-        return currY;
-    }
-
-    int cx() {                  //ritorna la posizione attuale nelle x
-        return currX;
-    }
-
-    int cl() {                              //mi ritorna il valore della vita attuale
-        return vita;
-    }
-
     void su2() {
         int tmp = currY;
         bool controllo;
@@ -196,6 +176,35 @@ public:
                 }
             }
         }
+    }
+        void incrementavita (hpup * add){            //funzioni usate per l'interazione col personaggio
+        if (add->raccolto(currY, currX)){
+            vita = vita + 50;
+        }
+    }
+    void danneggia (int d){
+        vita = vita - d;
+    }
+    
+        void disegna() {
+        mvwaddch(window, currY, currX, carattere);
+        wrefresh(window);
+    }
+
+    void cancella(){
+        mvwaddch(window, currY, currX, ' ');
+        wrefresh(window);
+    }
+    int cy() {                  //ritorna la posizione attuale nelle y
+        return currY;
+    }
+
+    int cx() {                  //ritorna la posizione attuale nelle x
+        return currX;
+    }
+
+    int cl() {                              //mi ritorna il valore della vita attuale
+        return vita;
     }
 };
 
