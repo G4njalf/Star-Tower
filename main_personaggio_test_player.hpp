@@ -76,7 +76,7 @@ void player (WINDOW* win, coordinates p, int layout){
             wtimeout(win, 80);
             int movimento = wgetch(win);
             //sparare(prot, win, movimento);
-            if(movimento==KEY_UP){
+            /*if(movimento==KEY_UP){
                 sparo *proiettile = new sparo(prot.cy(), prot.cx(), '.', win);
                 while(!proiettile->return_ostacolo()) {
                     int movimento2 = wgetch(win);
@@ -144,12 +144,12 @@ void player (WINDOW* win, coordinates p, int layout){
                 proiettile->cancella2();
                 delete proiettile;
             }
-            else {
+            else {*/
                 prot.cancella();
                 prot.muovi(movimento);
 
                 prot.disegna();
-            }
+            //}
         
             if (changemap(layout,getcury(win),getcurx(win)) != 100)
             {

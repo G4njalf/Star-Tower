@@ -12,7 +12,7 @@ terminal acsizet; // grandezza della stanza
 door acporta;
 int aclayout; //tipo di layout
 int acId;
-
+const int numNemici = 3; // numero nemici
 
 
 struct mappaAlbero
@@ -87,30 +87,18 @@ void map(bool exit)
     //main cycle
     while (!exit) // !exit con menu // true senza menu
     {   
-        //bool where;
-        //pmappaAlbero head = NULL;
-        //Pwindow room = newwin(acsizet.rows,acsizet.columns,0,0);
-        //head = create(head,StanzaRandom(1,0,room),where,id);
-        //head->val.draw();
-        //mvaddch(10,10,'x');
-        //refresh();
-        //player(room,head->val.getcoordinates(),head->val.layout);
-        /*int ch =  getch();
-        if (ch == 'v')
-        {
-            break;
-        }*/
-        
         if (changemap(head->val.layout,getcury(room),getcurx(room)) == 0) // torno indietro nella mappa
         {
             if (head->parent != NULL)
             {
                 head = head->parent;
+                head->val = Stanzatest(1,0,room,head->val.layout);
                 head->val.draw();
                 mvwaddstr(room,21,1,"0a");
                 wrefresh(room);
-                player(room,head->val.getcoordinates(),head->val.layout);
                 profondita--;
+                mvwprintw(room,22,1,"%d",profondita);
+                player(room,head->val.getcoordinates(),head->val.layout);
             }
             else
             {
