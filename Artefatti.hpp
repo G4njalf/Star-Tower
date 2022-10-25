@@ -1,19 +1,12 @@
 #include <ncurses.h>
-//#include "Personaggio.hpp"
-//using namespace std;
 
 class artefatto{
-private:
+protected:
     int posX, posY;
-  //  char carattere;
 public:
     artefatto(int y, int x){
         posY = y;
         posX = x;
-     //   carattere = c;
-    }
-    void disegna (WINDOW * win){
-        mvwaddch(win, posY, posX, ACS_DIAMOND);
     }
     int cy(){
         return posY;
@@ -21,24 +14,32 @@ public:
     int cx(){
         return posX;
     }
+    void cancella(WINDOW * window){
+        mvwaddch(window, posY, posX, ' ');
+        wrefresh(window);
+    }
 };
 class hpup : public artefatto{
 private:
-    int bonus;
+    bool elimina=false;
+    int vitapersonaggio;
 public:
-    hpup (int y, int x, int b) : artefatto (y, x){
-        bonus = b;
+    hpup (int y, int x, int vitapers) : artefatto (y, x){
+        vitapersonaggio = vitapers;
     }
-   bool raccolto (personaggio p){                   //controlla se e' sopra all'artefatto, se si aggiunge il bonus.
-        if (cy()==p.cy() && cx()==p.cx()){
+    void disegna (WINDOW * win){
+        mvwaddch(win, posY, posX, ACS_DIAMOND);
+    }
+    bool raccolto (int y, int x){                   //controlla se e' sopra all'artefatto, se si aggiunge il bonus.
+        bool controllo=false;
+        if (posY==y && posX==x){
             flash();
-            p.incrementavita(bonus);
-         //  p.cl() == p.cl()+bonus;
+            elimina = true;
+            controllo=true;
         }
-        return 1;
+        return controllo;
     }
-    int aggbonus(){
-        return bonus;
+    bool return_elimina(){
+        return elimina;
     }
-
 };
