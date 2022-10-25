@@ -16,10 +16,10 @@ public:
         currY = y;
         carattere = c;
     }
-
+    
     void su() {
         currY--;
-        if (mvwinch(window, currY, currX)!=32||currY==0) {              //se e' diverso dallo spazio vuoto non si muove
+        if (mvwinch(window, currY, currX)==95||mvwinch(window, currY, currX)==124||currY==0) {              //se e' diverso dallo spazio vuoto non si muove
             currY++;
             refresh();
         }
@@ -27,7 +27,7 @@ public:
 
     void giu() {
         currY++;
-        if (mvwinch(window, currY, currX)!=32||currY==23) {
+        if (mvwinch(window, currY, currX)==95||mvwinch(window, currY, currX)==124||currY==23) {
             currY--;
             refresh();
         }
@@ -35,7 +35,7 @@ public:
 
     void destra() {
         currX++;
-        if (mvwinch(window, currY, currX)!=32||currX==79) {
+        if (mvwinch(window, currY, currX)==95||mvwinch(window, currY, currX)==124||currX==79) {
             currX--;
             refresh();
         }
@@ -43,7 +43,7 @@ public:
 
     void sinistra() {
         currX--;
-        if (mvwinch(window, currY, currX)!=32||currX==0) {
+        if (mvwinch(window, currY, currX)==95||mvwinch(window, currY, currX)==124||currX==0) {
             currX++;
             refresh();
         }
@@ -78,7 +78,6 @@ public:
         }
         return movimento;
     }
-
     void su2() {
         int tmp = currY;
         bool controllo;
