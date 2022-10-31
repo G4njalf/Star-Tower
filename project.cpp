@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <ncurses.h>
 #include <thread>
 #include <string>
@@ -24,8 +24,8 @@ box(playwin, 0, 0);
 refresh();
 wrefresh(playwin);
 Player * p = new Player(playwin, 1, 4, '$', 10);
-shootingenemy * e= new shootingenemy(playwin, 18 , 69 , 'X',0, 18 , 0 , 3, 6);
-//enemy *e= new enemy(playwin, 1, 48 , 'X');	
+shootingenemy * e= new shootingenemy(playwin, 18 , 68 , 'X',0, 18 , 0 , 3, 7);
+
 
 
 nodelay(playwin, TRUE);

@@ -187,7 +187,6 @@ int Player::getmv()
       counter=0; 
     }
     flag=false;
-
      
     return choice;
 
