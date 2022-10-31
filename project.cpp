@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <ncurses.h>
 #include <thread>
 #include <string>
@@ -32,28 +32,7 @@ nodelay(playwin, TRUE);
 wtimeout(playwin, 1);
 int Life =3;
 
- /*mvwprintw(playwin, 19 ,0, "__________________________________________________");
- mvwprintw(playwin, 0 ,0, "__________________________________________________");
- mvwprintw(playwin, 1 ,0,"|");
- mvwprintw(playwin, 2 ,0,"|");
- mvwprintw(playwin, 3 ,,"|");
- mvwprintw(playwin, 4 ,25,"|");
- mvwprintw(playwin, 5 ,25,"|");
- mvwprintw(playwin, 6 ,25,"|");
- mvwprintw(playwin, 7 ,25,"|");
- mvwprintw(playwin, 8 ,25,"|");
- mvwprintw(playwin, 9 ,25,"|");
- mvwprintw(playwin, 10 ,25,"|");
- mvwprintw(playwin, 11 ,25,"|");
- mvwprintw(playwin, 12 ,25,"|");
- mvwprintw(playwin, 13 ,25,"|");
- mvwprintw(playwin, 14 ,25,"|");
- mvwprintw(playwin, 15 ,25,"|");
- mvwprintw(playwin, 16 ,25,"|");
- mvwprintw(playwin, 17 ,25,"|");
- mvwprintw(playwin, 18 ,25,"|");
- mvwprintw(playwin, 19 ,25,"|");
- //mvwprintw(playwin, 20 ,25,"|")*/
+ 
 
 
 
@@ -90,7 +69,7 @@ int Life =3;
 	e->leftenemsh();
 	wrefresh(playwin);
 	if (e->getenemx()==p->getplx() && e->getenemy()==p->getply()){Life--;}   
- 	//napms(1);
+
 	}while(p->getmv()!='x' && Life>0);
 
 	e->undisplay();
