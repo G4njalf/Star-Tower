@@ -212,10 +212,10 @@ class shootingenemy : public enemy {
 		void upenemsh();
 		void downenemsh();
 		void addbullet();
-      	void remove_bullet();
-      	void addblank();
-      	void remove_blank();
-      	void stampa_bullets();
+		void remove_bullet();
+		void addblank();
+		void remove_blank();
+		void stampa_bullets();
 
 };
 
