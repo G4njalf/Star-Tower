@@ -45,13 +45,13 @@ enemy::enemy(WINDOW *win, int y, int x , char c )
 }
 	void enemy::mvup()
 	{ mvwaddch(curwin, yloc, xloc, ' ');
-	napms(100);
+	//napms(100);
 	yloc--;
 
 	}
 	void enemy::mvdown()
 	{ mvwaddch(curwin, yloc, xloc, ' ');
-	napms(100);
+	//napms(100);
 	yloc++;
 	}
 
@@ -59,13 +59,13 @@ enemy::enemy(WINDOW *win, int y, int x , char c )
 
 void enemy::mvright()
 	{ mvwaddch(curwin, yloc, xloc, ' ');
-	napms(100);
+	//napms(100);
 	xloc++;
 
 	}
 void enemy::mvleft()
 	{ mvwaddch(curwin, yloc, xloc, ' ');
-	napms(100);
+	//napms(100);
 	xloc--;
 
 	}
@@ -81,6 +81,7 @@ void enemy::mvleft()
 
 
 	void enemy::verticalmove(){ 
+	
 
 		if(mvwinch(curwin, yloc+1, xloc)!=32){j=1;}
 		if(mvwinch(curwin, yloc-1, xloc)!=32){j=0;}
@@ -91,10 +92,9 @@ void enemy::mvleft()
 		if(j==1){
 		mvup();
 		display();
-
-		}
-
-		}
+			}
+		
+	}
 
 	void enemy::horizontalmove(){ 
 
@@ -216,6 +216,7 @@ class shootingenemy : public enemy {
 		void addblank();
 		void remove_blank();
 		void stampa_bullets();
+		void undisplaybullets();
 
 };
 
@@ -523,6 +524,30 @@ void shootingenemy:: addblank(){
     }
 	}
 	
+}
+
+
+
+void shootingenemy:: undisplaybullets(){
+lnemico tmp = p ; 
+while(tmp != NULL){
+ 	   if(tmp->id == 1 ){
+                mvwaddch(curwin, tmp->by+1, tmp->bx, ' ');
+            }
+       else if(tmp->id == 2 ){
+                mvwaddch(curwin, tmp->by, tmp->bx+1, ' ');
+            }
+       else if(tmp->id == 3 ){
+                mvwaddch(curwin, tmp->by-1, tmp->bx, ' ');
+            }
+       else if(tmp->id == 4 ){
+                mvwaddch(curwin, tmp->by, tmp->bx-1, ' ');
+            }    
+       tmp = tmp->next ;
+        }
+
+mvwaddch(curwin, yloc, xloc,' ' ); 
+
 }
 
 #endif

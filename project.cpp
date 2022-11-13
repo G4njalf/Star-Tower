@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <ncurses.h>
 #include <thread>
 #include <string>
@@ -23,14 +23,16 @@ WINDOW * playwin = newwin(25, 80, (yMax/2)-10, 10);
 box(playwin, 0, 0);
 refresh();
 wrefresh(playwin);
-Player * p = new Player(playwin, 1, 4, '$', 10);
-shootingenemy * e= new shootingenemy(playwin, 18 , 68 , 'X',0, 18 , 0 , 3, 7);
+Player * p = new Player(playwin, 1, 4, '$', 1);
+shootingenemy * e= new shootingenemy(playwin, 18 , 68 , 'X',0, 18 , 0 , 3, 7 );
 
 
 
 nodelay(playwin, TRUE);
 wtimeout(playwin, 1);
 int Life =3;
+int life2 =2; 
+int x, y;
 
  
 
@@ -61,20 +63,32 @@ int Life =3;
 
 
 
-	do {
+	do { 
+    
 	p->display();
 	if(wgetch(playwin) == ERR){}
 	else{
 	p->getmv();}
-	e->leftenemsh();
-	wrefresh(playwin);
-	if (e->getenemx()==p->getplx() && e->getenemy()==p->getply()){Life--;}   
+    if(mvwinch(playwin,e->getenemy(), e->getenemx() )=='.'){life2--;}
+    if (e->getenemx()==p->getplx() && e->getenemy()==p->getply()){Life--;} 
+    if(life2>0){
+	 e->leftenemsh();}
+    else if(life2==0){
+        e->undisplaybullets(); 
+        delete e; 
+        e=NULL; 
+        life2--; 
+    }
+	
+    
+    napms(100);
 
-	}while(p->getmv()!='x' && Life>0);
+	}while(p->getmv()!='x' && Life>0 && life2>0);
 
-	e->undisplay();
+	/*e->undisplay();
+    
 	delete e;
-	e=NULL;
+	e=NULL;*/
 
 	do{
 	mvwprintw(playwin, 10 , 20 , "GAME OVER");
