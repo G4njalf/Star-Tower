@@ -1,105 +1,110 @@
-#include <iostream>
-#include "Personaggio.hpp"
-#include "Artefatti.hpp"
-#include "Nemici.hpp"
+#include <ncurses.h>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+#include "player.hpp"
+#include "enemy.hpp"
 
-bool gameover = false;
-bool bf = true;
-
-//int notimeout(WINDOW * window, bool bf);
-
-/*void funzpers(personaggio p, hpup h, nemico n){
-    p.colpito(n.cy(), n.cx(), n.dannobomba(), n);
-    h.raccolto(p);
-}*/
-
-void inizio(){
-    initscr();
-    noecho();
-    raw();
-    cbreak();
-}
-
-void colori(){
-    start_color();
-    init_pair(1, COLOR_RED, COLOR_BLACK);
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    init_pair(3, COLOR_MAGENTA, COLOR_BLACK);
-}
-
-void scrittagameover(personaggio prot, WINDOW * win){       //scrive la scritta gameover una lettera alla volta
-    wattron (win, COLOR_PAIR(3));
+void displaygameover(WINDOW * win){       //scrive la scritta gameover una lettera alla volta
+//    wattron (win, COLOR_PAIR(3));
     char A[8] = {'G','A', 'M','E','O','V','E','R'};
     int x = 20;
     for (int i=0; i<8; i++){
-        mvwaddch(win, 9, x, A[i]);                          //scrive ogni lettera dell'array, viene incrementata la x
+        mvwaddch(win, 8, x, A[i]);                          //scrive ogni lettera dell'array, viene incrementata la x
         wrefresh(win);                                      // così vengono scritte di fianco
-        napms(200);
+        napms(100);
         x++;
     }
-    wattroff (win, COLOR_PAIR(3));
+ //   wattroff (win, COLOR_PAIR(3));
     wrefresh(win);
 }
 
-int main (){
-    inizio();
-    colori();
+int main (int argc, char ** argv)
+{
+initscr();
+noecho();
+cbreak();
+curs_set(0);
+int yMax, xMax;
+getmaxyx(stdscr, yMax, xMax);
 
-    WINDOW * win = newwin (20, 50, 0, 0);                   //creo la finestra
-    refresh();
-    box (win, 0, 0);
-    wrefresh(win);
-    keypad(win, TRUE);
+WINDOW * playwin = newwin(25, 80, (yMax/2)-10, 10);
+box(playwin, 0, 0);
+refresh();
+wrefresh(playwin);
+Player * p = new Player(playwin, 1, 4, '$', 1, 1000, 25);
+shootingenemy * e = new shootingenemy(playwin, 18 , 68 , 'X',100, 0, 18 , 0 , 3, 7);
+artifact * h = new artifact(16, 15, '.');
 
-    personaggio prot(10, 25, '&', 100, win);
-    int prevl = prot.cl();
-    mina * bomba = new mina('*', 100, 16, 40);              //creo i puntatori alle varie entita
-    hpup * vita = new hpup(10, 11, 50);
-    lanciabomba * nemico2 = new lanciabomba(ACS_BLOCK, 50, 2, 8);
-    bomba->disegna(win);
-    vita->disegna(win);
-    mvwprintw(win, 18, 40, "VITA: ");
-    mvwprintw(win, 18, 46, "%d", prevl);
-    wrefresh(win);
-    int i=0;
-    nodelay(win, TRUE);
-    do {
-        while (!gameover){              //finchè non c'è un gameover posso giocare
-      //      funzpers(prot, vita, bomba);
-            prot.disegna();
-           // notimeout(win, bf);
-           // prot.colpito(bomba.cy(), bomba.cx(), bomba.dannobomba(), bomba);
-            bomba->colpito(prot, prot.cy(), prot.cx(), win);
-            if (vita->raccolto(prot)==1){               //se viene raccolto si cancella, faccio lo stesso coi nemici
-                delete vita;
-            }
-            if (bomba->colpito(prot, cy(), cx(), win)){
-                delete bomba;
-            }
-          //  nemico2.disegna(win);
-            if (prot.cl()!=prevl){
-                mvwprintw(win, 18, 46, "   ");
-                mvwprintw(win, 18, 46, "%d", prevl);            // se la vita cambia, la aggiorno
-                wrefresh(win);
-                prevl = prot.cl();
-            }
-            if (prot.muovi()=='x' || prot.cl() <= 0) {       //per uscire "forzatamente" premere x,
-                wclear(win);                                 // altrimenti esce in automatico se muori
-                flash();
-                scrittagameover(prot, win);
-                gameover = true;
-            }
-          //  nemico2.muovi(win);
-            /*if (i==0){
-                prot.incrementavita(9);
-            }*/
+nodelay(playwin, TRUE);
+
+
+            mvwprintw(playwin,1 ,1,"__|    |______________________________________________________________________");
+            mvwprintw(playwin,2 ,1,"__|    |______________________________________________________________________");
+            mvwprintw(playwin,3 ,1,"__|    |______|                                                     |_________");
+            mvwprintw(playwin,4 ,1,"__|    |______|                                                     |_________");
+            mvwprintw(playwin,5 ,1,"__|    |______|     _________________                               |_________");
+            mvwprintw(playwin,6 ,1,"__|    |______|    |_________________|                              |_________");
+            mvwprintw(playwin,7 ,1,"__|                |_________________|                              |_________");
+            mvwprintw(playwin,8 ,1,"__|                |_________________|                              |_________");
+            mvwprintw(playwin,9 ,1,"__|________________|_________________|                              |_________");
+            mvwprintw(playwin,10,1,"_____________________________________|                                        ");
+            mvwprintw(playwin,11,1,"_____________________________________|                                        ");
+            mvwprintw(playwin,12,1,"_____________________________________|                                ________");
+            mvwprintw(playwin,13,1,"____|                                                                |________");
+            mvwprintw(playwin,14,1,"____|                                                                |________");
+            mvwprintw(playwin,15,1,"____|                                                                |________");
+            mvwprintw(playwin,16,1,"____|                                                                |________");
+            mvwprintw(playwin,17,1,"____|                                                                |________");
+            mvwprintw(playwin,18,1,"____|                                                                |________");
+            mvwprintw(playwin,19,1,"____________________      ___________________________________________|________");
+            mvwprintw(playwin,20,1,"____________________|    |____________________________________________________");
+            mvwprintw(playwin,21,1,"____________________|    |____________________________________________________");
+            mvwprintw(playwin,22,1,"____________________|    |____________________________________________________");
+
+    h->drawhpup(playwin);
+    mvwprintw(playwin, 23, 1, "VITA: ");
+
+	while (p->currentlife()){
+        mvwprintw(playwin, 23, 7, "    ");
+        mvwprintw(playwin, 23, 12, "    ");
+        mvwprintw(playwin, 23, 7, "%d", p->currentlife());
+        mvwprintw(playwin, 23, 12, "%d", e->currentlife());
+        wtimeout(playwin, 100);
+        p->display();
+        p->getmv();
+        if (mvwinch(playwin, e->currentY(), e->currentX())=='.'||mvwinch(playwin, e->currentY()+1, e->currentX())=='.'){     //controlla la posizione del nemico anche
+            e->damage(p->currdamage());
         }
+        if(!e->return_kill()) {
+            e->leftenemsh();
+        }
+    if(!h->return_remove()){
+        p->healtup(h);
     }
-    while (prot.muovi()!='x');      //esco dal progetto
+    if (mvwinch(playwin, p->currentY(), p->currentX())=='*'){
+        p->damage(e->bulletdamage());
+    }
+	if (e->currentX()==p->currentX() && e->currentY()==p->currentY()){
+        p->damage(50);
+    }
 
-    endwin();
-    cout << prot.cl() << endl;
-    //cout << prot.cy() << " " << prot.cx() << endl;
-    cout << prot.cy() << " " << prot.cx() << endl;
-   return 0;
+    wrefresh(playwin);
+	}
+
+	e->undisplay();
+	delete e;
+    delete h;
+    delete p;
+	e=NULL;
+
+    werase(playwin);
+    displaygameover(playwin);
+
+    mvprintw(20, 1, "Premere un tasto casuale per uscire");
+    getch();
+
+
+endwin();
+return 0;
 }
