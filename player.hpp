@@ -13,7 +13,7 @@ typedef personaggio *lpersonaggio;
 class Player
 {
 public :
-    Player(WINDOW *win, int y, int x, char c, int firerate, int h, int bd);
+    Player(WINDOW *win, int y, int x, char c, int firerate, int h, int bd, int Score);
 
     void mvup();
     void mvdown();
@@ -36,6 +36,9 @@ public :
     int currentY();
     int currentX();
     int currdamage();
+    void print_score();
+    int cscore();
+    void add_score();
 
 protected:
     int xLoc, yLoc, xMax, yMax, xb, yb, identity, counter, firerate;
@@ -45,10 +48,11 @@ protected:
     WINDOW * curwin;
     lpersonaggio  p ;
     lpersonaggio  b ;
+    int score;
 
 };
 
-Player::Player(WINDOW * win, int y, int x, char c, int firerate, int h, int bd)
+Player::Player(WINDOW * win, int y, int x, char c, int firerate, int h, int bd, int Score)
 {
     curwin = win;
     yLoc = y;
@@ -62,6 +66,7 @@ Player::Player(WINDOW * win, int y, int x, char c, int firerate, int h, int bd)
     flag = true;
     healt = h;
     bulldamage = bd;
+    score=Score;
 }
 
 
@@ -481,5 +486,17 @@ void Player:: addblank(){
             tmp->next = NULL;
         }
     }
-
 }
+
+    void Player:: print_score(){
+        mvwprintw(curwin, 23, 12, "SCORE: ");
+        mvwprintw(curwin, 23, 19, "%d", score);
+    }
+
+    int Player:: cscore(){
+        return score;
+    };
+
+    void Player:: add_score(){
+        score=score+100;
+    }

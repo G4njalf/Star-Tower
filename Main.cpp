@@ -38,7 +38,7 @@ WINDOW * playwin = newwin(25, 80, (yMax/2)-10, 10);
 box(playwin, 0, 0);
 refresh();
 wrefresh(playwin);
-Player * p = new Player(playwin, 1, 4, '$', 1, 1000, 50);
+Player * p = new Player(playwin, 1, 4, '$', 1, 1000, 50, 0);
 shootingenemy * e= new shootingenemy(playwin, 18 , 68 , 'X',100, 0, 18 , 0 , 3, 7);
 shootingenemy * e2= new shootingenemy(playwin, 15 , 60 , 'X',100, 0, 18 , 0 , 3, 7);
 artifact * h = new artifact(16, 15, '.');
@@ -77,12 +77,15 @@ wtimeout(playwin, 1);
 
     h->drawhpup(playwin);
     mvwprintw(playwin, 23, 1, "VITA: ");
+    mvwprintw(playwin, 23, 17, "SCORE: ");
 
     for (int i=0; i<2; i++){
     nemici_vivi[i]=true;
     };
 
     bool stop=false;
+    bool already_added_score1=false;
+    bool already_added_score2=false;
     
     
 
@@ -92,6 +95,8 @@ wtimeout(playwin, 1);
         mvwprintw(playwin, 23, 12, "    ");
         mvwprintw(playwin, 23, 7, "%d", p->currentlife());
         mvwprintw(playwin, 23, 12, "%d", e->currentlife());
+        mvwprintw(playwin, 23, 23, "%d", p->cscore());
+
         if (mvwinch(playwin, e->currentY(), e->currentX())=='.'||mvwinch(playwin, e->currentY()+1, e->currentX())=='.'){     //non legge il proiettile
         e->damage(p->currdamage());
     }
@@ -106,16 +111,20 @@ wtimeout(playwin, 1);
         if(!e->return_kill()){
 	        e->leftenemsh();
         }
-        else{
+        else if (e->return_kill()&& already_added_score1==false){
             e->undisplay();
             nemici_vivi[0]=false;      /////
+            p->add_score();
+            already_added_score1=true;
         }
         if(!e2->return_kill()){
 	        e2->leftenemsh();
         }
-        else{
+        else if (e2->return_kill()&& already_added_score2==false){
             e2->undisplay();
             nemici_vivi[1]=false;      /////
+            p->add_score();
+            already_added_score2=true;
         }
         //controllo dell'array che mi dice che i nemici sono vivi o morti. Se sono tutti morti, stmapa la chiave
         if (nemici_vivi[0]==false && nemici_vivi[1]==false && (stop==false)){          //////
