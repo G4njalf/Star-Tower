@@ -3,7 +3,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include "/mnt/c/Users/Lenovo/Desktop/UNIVERSITA/PROGRAMMAZIONE/Progetto/map/draw.hpp"
+//#include "/mnt/c/Users/Lenovo/Desktop/UNIVERSITA/PROGRAMMAZIONE/Progetto/map/draw.hpp"
 #include "/mnt/c/Users/Lenovo/Desktop/UNIVERSITA/PROGRAMMAZIONE/Progetto/player/playerNEW.hpp"
 #include "enemyDef.hpp"
 using namespace std;
@@ -36,46 +36,46 @@ void gioco(WINDOW * playwin,int idmap,coordinates p,coordinates n1,coordinates n
 	            player->getmv();
             }
         /*collisioni*/
-            if(nemico1->life()>0)
+            if(true) //nemico1->life()>0
             {     /*primo nemico*/
                 nemico1->leftenemsh();
             }   //tipo di movimento
-            else if(nemico1->life()==0)
+            else if(false)  //nemico1->life()==0
             {
                 nemico1->undisplaybullets(); 
                 delete nemico1; 
                 nemico1=NULL; 
-                nemico1->decreaselifenemico(); 
+                //nemico1->decreaselifenemico(); 
             }
 
-            if(nemico2->life()>0)
+            if(true) //nemico2->life()>0
             {      /*secondo nemico*/
                 nemico2->leftenemsh();
             }
-            else if(nemico2->life()==0)
+            else if(false) //nemico2->life()==0
             {
                 nemico2->undisplaybullets(); 
                 delete nemico2; 
                 nemico2=NULL; 
-                nemico2->decreaselifenemico(); 
+                //nemico2->decreaselifenemico(); 
             }
 
-            if(nemico3->life()>0)
+            if(true) //nemico3->life()>0
             {      /*terzo nemico*/
                 nemico3->leftenemsh();
             }
-            else if(nemico3->life()==0)
+            else if(false)  //nemico3->life()==0
             {
                 nemico3->undisplaybullets(); 
                 delete nemico3; 
                 nemico3=NULL; 
-                nemico3->decreaselifenemico(); 
+                //nemico3->decreaselifenemico(); 
             }
 
             napms(100);
 
 	    }
-        while(player->getmv()!='x' && Life>0 && /*cambio mappa*/);
+        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) != 100);
     }
 
     if(idmap==1)
@@ -100,46 +100,46 @@ void gioco(WINDOW * playwin,int idmap,coordinates p,coordinates n1,coordinates n
 	            player->getmv();
             }
         /*collisioni*/
-            if(nemico1->life()>0)
+            if(true) //nemico1->life()>0
             {     /*primo nemico*/
                 nemico1->leftenemsh();
             }   //tipo di movimento
-            else if(nemico1->life()==0)
+            else if(false)  //nemico1->life()==0
             {
                 nemico1->undisplaybullets(); 
                 delete nemico1; 
                 nemico1=NULL; 
-                nemico1->decreaselifenemico(); 
+                //nemico1->decreaselifenemico(); 
             }
-            
-            if(nemico2->life()>0)
+
+            if(true) //nemico2->life()>0
             {      /*secondo nemico*/
                 nemico2->leftenemsh();
             }
-            else if(nemico2->life()==0)
+            else if(false) //nemico2->life()==0
             {
                 nemico2->undisplaybullets(); 
                 delete nemico2; 
                 nemico2=NULL; 
-                nemico2->decreaselifenemico(); 
+                //nemico2->decreaselifenemico(); 
             }
 
-            if(nemico3->life()>0)
+            if(true) //nemico3->life()>0
             {      /*terzo nemico*/
                 nemico3->leftenemsh();
             }
-            else if(nemico3->life()==0)
+            else if(false)  //nemico3->life()==0
             {
                 nemico3->undisplaybullets(); 
                 delete nemico3; 
                 nemico3=NULL; 
-                nemico3->decreaselifenemico(); 
+                //nemico3->decreaselifenemico(); 
             }
 
             napms(100);
 
 	    }
-        while(player->getmv()!='x' && Life>0 && /*cambio mappa*/);
+        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) != 100);
     }
 
     if(idmap==2)
@@ -164,46 +164,46 @@ void gioco(WINDOW * playwin,int idmap,coordinates p,coordinates n1,coordinates n
 	            player->getmv();
             }
         /*collisioni*/
-            if(nemico1->life()>0)
+            if(true) //nemico1->life()>0
             {     /*primo nemico*/
                 nemico1->leftenemsh();
             }   //tipo di movimento
-            else if(nemico1->life()==0)
+            else if(false)  //nemico1->life()==0
             {
                 nemico1->undisplaybullets(); 
                 delete nemico1; 
                 nemico1=NULL; 
-                nemico1->decreaselifenemico(); 
+                //nemico1->decreaselifenemico(); 
             }
-            
-            if(nemico2->life()>0)
+
+            if(true) //nemico2->life()>0
             {      /*secondo nemico*/
                 nemico2->leftenemsh();
             }
-            else if(nemico2->life()==0)
+            else if(false) //nemico2->life()==0
             {
                 nemico2->undisplaybullets(); 
                 delete nemico2; 
                 nemico2=NULL; 
-                nemico2->decreaselifenemico(); 
+                //nemico2->decreaselifenemico(); 
             }
 
-            if(nemico3->life()>0)
+            if(true) //nemico3->life()>0
             {      /*terzo nemico*/
                 nemico3->leftenemsh();
             }
-            else if(nemico3->life()==0)
+            else if(false)  //nemico3->life()==0
             {
                 nemico3->undisplaybullets(); 
                 delete nemico3; 
                 nemico3=NULL; 
-                nemico3->decreaselifenemico(); 
+                //nemico3->decreaselifenemico(); 
             }
 
             napms(100);
 
 	    }
-        while(player->getmv()!='x' && Life>0 && /*cambio mappa*/);
+        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) != 100);
     }
 
     if(idmap==3)
@@ -228,45 +228,47 @@ void gioco(WINDOW * playwin,int idmap,coordinates p,coordinates n1,coordinates n
 	            player->getmv();
             }
         /*collisioni*/
-            if(nemico1->life()>0)
+            if(true) //nemico1->life()>0
             {     /*primo nemico*/
                 nemico1->leftenemsh();
             }   //tipo di movimento
-            else if(nemico1->life()==0)
+            else if(false)  //nemico1->life()==0
             {
                 nemico1->undisplaybullets(); 
                 delete nemico1; 
                 nemico1=NULL; 
-                nemico1->decreaselifenemico(); 
+                //nemico1->decreaselifenemico(); 
             }
-            
-            if(nemico2->life()>0)
+
+            if(true) //nemico2->life()>0
             {      /*secondo nemico*/
                 nemico2->leftenemsh();
             }
-            else if(nemico2->life()==0)
+            else if(false) //nemico2->life()==0
             {
                 nemico2->undisplaybullets(); 
                 delete nemico2; 
                 nemico2=NULL; 
-                nemico2->decreaselifenemico(); 
+                //nemico2->decreaselifenemico(); 
             }
 
-            if(nemico3->life()>0)
+            if(true) //nemico3->life()>0
             {      /*terzo nemico*/
                 nemico3->leftenemsh();
             }
-            else if(nemico3->life()==0)
+            else if(false)  //nemico3->life()==0
             {
                 nemico3->undisplaybullets(); 
                 delete nemico3; 
                 nemico3=NULL; 
-                nemico3->decreaselifenemico(); 
+                //nemico3->decreaselifenemico(); 
             }
 
             napms(100);
 
 	    }
-        while(player->getmv()!='x' && Life>0 && /*cambio mappa*/);
+        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) != 100);
     }
+
 }
+    
