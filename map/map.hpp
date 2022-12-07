@@ -81,7 +81,7 @@ void map(bool exit)
     Pwindow room = newwin(acsizet.rows,acsizet.columns,0,0);
     head = create(head,StanzaRandom(1,0,room),where,id);
     head->val.draw();
-    mvaddstr(21,1,"first");
+    mvwaddstr(room,21,1,"first");
     wrefresh(room);
     //player(room,head->val.getcoordinatesP(),head->val.layout);
     gioco(room,head->val.layout,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3());
