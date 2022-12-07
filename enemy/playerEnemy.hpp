@@ -23,9 +23,9 @@ void gioco(WINDOW * playwin,int idmap,coordinates p,coordinates n1,coordinates n
         shootingenemy * nemico1= new shootingenemy(playwin,n1.rows,n1.columns,'V',0,18,0,3,7);
         shootingenemy * nemico2= new shootingenemy(playwin,n2.rows,n2.columns,'V',0,18,0,3,7);
         shootingenemy * nemico3= new shootingenemy(playwin,n3.rows,n3.columns,'V',0,18,0,3,7);
-
+        nodelay(playwin,true);
+        wtimeout(playwin,1);
         do { 
-    
 	        player->display();
 	        if(wgetch(playwin) == ERR) //che cazzo vuol dire?
             {
@@ -75,7 +75,7 @@ void gioco(WINDOW * playwin,int idmap,coordinates p,coordinates n1,coordinates n
             napms(100);
 
 	    }
-        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) != 100);
+        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
     }
 
     if(idmap==1)
@@ -139,7 +139,7 @@ void gioco(WINDOW * playwin,int idmap,coordinates p,coordinates n1,coordinates n
             napms(100);
 
 	    }
-        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) != 100);
+        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
     }
 
     if(idmap==2)
@@ -203,7 +203,7 @@ void gioco(WINDOW * playwin,int idmap,coordinates p,coordinates n1,coordinates n
             napms(100);
 
 	    }
-        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) != 100);
+        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
     }
 
     if(idmap==3)
@@ -267,7 +267,7 @@ void gioco(WINDOW * playwin,int idmap,coordinates p,coordinates n1,coordinates n
             napms(100);
 
 	    }
-        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) != 100);
+        while(player->getmv()!='x' && /*Life>0*/true && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
     }
 
 }
