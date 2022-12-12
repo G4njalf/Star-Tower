@@ -195,7 +195,7 @@ public:
                     mvwaddch(window, currY, currX, 'o');
                     wrefresh(window);
                     napms(100);
-                }
+                } 
             }
         }
     }

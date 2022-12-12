@@ -4,6 +4,16 @@
 #include"draw.hpp"
 using namespace std;
 
+struct coordEnemy
+{
+    int col1;
+    int row1;
+    int col2;
+    int row2;
+    int col3;
+    int row3;
+};
+
 struct terminal
 {
     int columns;
@@ -76,242 +86,128 @@ public:
     };
 
 //le coordinate sono randomiche tra 3 combinazioni possibili
-    coordinates getcoordinatesE1() // coordinate dove spawna il nemico 1
+    coordEnemy getcoordinatesE1() // coordinate dove spawna il nemico 1 // 3 possibili spawn
     {
-        srand((unsigned)time(0));
-        int rconf = rand() % 3;
-        coordinates e1;
+        coordEnemy e1;
         if (layout == 0)
         {
-            if (rconf == 0)
-            {
-                e1.rows = 6;
-                e1.columns = 48;
-            }
-            else if (rconf == 1)
-            {
-                e1.rows = 6;
-                e1.columns = 48;
-            }
-            else if (rconf == 2)
-            {
-                e1.rows = 6;
-                e1.columns = 48;
-            }
+            e1.row1 = 6;
+            e1.col1 = 48;
+            e1.row2 = 6;
+            e1.col2 = 48;
+            e1.row3 = 3;
+            e1.col3 = 30;
         }
         else if (layout == 1) 
         {
-            if (rconf == 0)
-            {
-                e1.rows = 3;
-                e1.columns = 29;
-            }
-            else if (rconf == 1)
-            {
-                e1.rows = 3;
-                e1.columns = 29;
-            }
-            else if (rconf == 2)
-            {
-                e1.rows = 3;
-                e1.columns = 29;
-            }
+            e1.row1 = 2;
+            e1.col1 = 29;
+            e1.row2 = 3;
+            e1.col2 = 29;
+            e1.row3 = 3;    
+            e1.col3 = 60;
         }
         else if (layout == 2) 
         {
-            if (rconf == 0)
-            {
-                e1.rows = 7;
-                e1.columns = 15;
-            }
-            else if (rconf == 1)
-            {
-                e1.rows = 7;
-                e1.columns = 15;
-            }
-            else if (rconf == 2)
-            {
-                e1.rows = 7;
-                e1.columns = 15;
-            }
+            e1.row1 = 7;
+            e1.col1 = 15;
+            e1.row2 = 7;
+            e1.col2 = 15;
+            e1.row3 = 7;
+            e1.col3 = 15;
         }
         else if (layout == 3) 
         {
-            if (rconf == 0)
-            {
-                e1.rows = 7;
-                e1.columns = 24;
-            }
-            else if (rconf == 1)
-            {
-                e1.rows = 7;
-                e1.columns = 24;
-            }
-            else if (rconf == 2)
-            {
-                e1.rows = 7;
-                e1.columns = 24;
-            }
+            e1.row1 = 7;
+            e1.col1 = 24;
+            e1.row2 = 19;
+            e1.col2 = 10;
+            e1.row3 = 7;
+            e1.col3 = 24;
         }
         return e1;
     };
    
-   coordinates getcoordinatesE2() // coordinate dove spawna il nemico 2
+   coordEnemy getcoordinatesE2() // coordinate dove spawna il nemico 2 // 3 possibili spawn
     {
-        srand((unsigned)time(0));
-        int rconf = rand() % 3;
-        coordinates e2;
+        coordEnemy e2;
         if (layout == 0) // 15,20
         {
-            if (rconf == 0)
-            {
-                e2.rows = 15;
-                e2.columns = 20;
-            }
-            else if (rconf == 1)
-            {
-                e2.rows = 15;
-                e2.columns = 20;
-            }
-            else if (rconf == 2)
-            {
-                e2.rows = 15;
-                e2.columns = 20;
-            }
+            e2.row1 = 15;
+            e2.col1 = 20;
+            e2.row2 = 15;
+            e2.col2 = 20;
+            e2.row3 = 17;
+            e2.col3 = 45;
         }
         else if (layout == 1) //11,66
         {
-            if (rconf == 0)
-            {
-                e2.rows = 11;
-                e2.columns = 66;
-            }
-            else if (rconf == 1)
-            {
-                e2.rows = 11;
-                e2.columns = 66;
-            }
-            else if (rconf == 2)
-            {
-                e2.rows = 11;
-                e2.columns = 66;
-            }
+            e2.row1 = 11;
+            e2.col1 = 66;
+            e2.row2 = 11;
+            e2.col2 = 66;
+            e2.row3 = 11;
+            e2.col3 = 66;
         }
         else if (layout == 2) //9,46
         {
-           if (rconf == 0)
-            {
-                e2.rows = 9;
-                e2.columns = 46;
-            }
-            else if (rconf == 1)
-            {
-                e2.rows = 9;
-                e2.columns = 46;
-            }
-            else if (rconf == 2)
-            {
-                e2.rows = 9;
-                e2.columns = 46;
-            } 
+            e2.row1 = 9;
+            e2.col1 = 46;
+            e2.row2 = 20;
+            e2.col2 = 55;
+            e2.row3 = 9;
+            e2.col3 = 65;
         }
         else if (layout == 3) //9,65
         {
-            if (rconf == 0)
-            {
-                e2.rows = 9;
-                e2.columns = 65;
-            }
-            else if (rconf == 1)
-            {
-                e2.rows = 9;
-                e2.columns = 65;
-            }
-            else if (rconf == 2)
-            {
-                e2.rows = 9;
-                e2.columns = 65;
-            }
+            e2.row1 = 9;
+            e2.col1 = 65;
+            e2.row2 = 10;
+            e2.col2 = 65;
+            e2.row3 = 9;
+            e2.col3 = 65;
         }
         return e2;
     };
 
-    coordinates getcoordinatesE3() // coordinate dove spawna il nemico 3
+    coordEnemy getcoordinatesE3() // coordinate dove spawna il nemico 3 //3 possibili spawn
     {
-        srand((unsigned)time(0));
-        int rconf = rand() % 3;
-        coordinates e3;
+        coordEnemy e3;
         if (layout == 0) //17,60
         {
-            if (rconf == 0)
-            {
-                e3.rows = 17;
-                e3.columns = 60;
-            }
-            else if (rconf == 1)
-            {
-                e3.rows = 17;
-                e3.columns = 60;
-            }
-            else if (rconf == 2)
-            {
-                e3.rows = 17;
-                e3.columns = 60;
-            }
+            e3.row1 = 17;
+            e3.col1 = 60;
+            e3.row2 = 17;
+            e3.col2 = 60;
+            e3.row3 = 17;
+            e3.col3 = 60;   
         }
         else if (layout == 1) //18,34
         {
-           if (rconf == 0)
-            {
-                e3.rows = 18;
-                e3.columns = 34;
-            }
-            else if (rconf == 1)
-            {
-                e3.rows = 18;
-                e3.columns = 34;
-            }
-            else if (rconf == 2)
-            {
-                e3.rows = 18;
-                e3.columns = 34;
-            } 
+            e3.row1 = 18;
+            e3.col1 = 34;
+            e3.row2 = 18;
+            e3.col2 = 34;
+            e3.row3 = 18;
+            e3.col3 = 15;
         }
         else if (layout == 2) //19,40
         {
-            if (rconf == 0)
-            {
-                e3.rows = 19;
-                e3.columns = 40;
-            }
-            else if (rconf == 1)
-            {
-                e3.rows = 19;
-                e3.columns = 40;
-            }
-            else if (rconf == 2)
-            {
-                e3.rows = 19;
-                e3.columns = 40;
-            }
+            e3.row1 = 19;
+            e3.col1 = 40;
+            e3.row2 = 16;
+            e3.col2 = 20;
+            e3.row3 = 19;
+            e3.col3 = 40;
         }
         else if (layout == 3) //16,42
         {
-            if (rconf == 0)
-            {
-                e3.rows = 16;
-                e3.columns = 42;
-            }
-            else if (rconf == 1)
-            {
-                e3.rows = 16;
-                e3.columns = 42;
-            }
-            else if (rconf == 2)
-            {
-                e3.rows = 16;
-                e3.columns = 42;
-            }
+            e3.row1 = 16;
+            e3.col1 = 10;
+            e3.row2 = 18;
+            e3.col2 = 42;
+            e3.row3 = 16;
+            e3.col3 = 42;
         }
         return e3;
     };
@@ -330,7 +226,6 @@ Room StanzaRandom(bool leftDoor, bool rightDoor, Pwindow room)
     porta.RightExitOpen = rightDoor;
     srand((unsigned)time(0));
     layout = rand() % 4;
-    //Pwindow room = newwin(sizet.rows,sizet.columns,0,0);
     Room SRandom = Room(room,sizet,layout,porta,identificativo);
     return SRandom;
 }

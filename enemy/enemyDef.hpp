@@ -237,7 +237,7 @@ void shootingenemy::rightenemsh(){
 		display();
 		}
 		if(counter==firerate){
-         	xb = xloc+11;
+         	xb = xloc+1;
          	yb = yloc;
          	identity =  4 ;
          	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95){
