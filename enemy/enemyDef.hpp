@@ -122,16 +122,16 @@ void enemy::diagonal1move(){
 		mvwaddch(curwin, yloc, xloc, ' ');
 		if(j==0){
 		xloc++;
-		napms(50);
+		
 		yloc++;
-		napms(50);
+		
 		display();
 		}
 		if(j==1){
 		xloc--;
-		napms(50);
+		
 		yloc--;
-		napms(50);
+		
 		display();
 
 		}
@@ -148,16 +148,16 @@ void enemy::diagonal2move(){
 		mvwaddch(curwin, yloc , xloc, ' ');
 		if(j==0){
 		xloc--;
-		napms(50);
+		
 		yloc++;
-		napms(50);
+		
 		display();
 		}
 		if(j==1){
 		xloc++;
-		napms(50);
+		
 		yloc--;
-		napms(50);
+		
 		display();
 
 		}
@@ -211,6 +211,10 @@ class shootingenemy : public enemy {
 		void leftenemsh();
 		void upenemsh();
 		void downenemsh();
+		void staticdownsh();
+		void staticleftsh();
+		void staticrightsh();
+		void staticupsh();
 		void addbullet();
 		void remove_bullet();
 		void addblank();
@@ -356,8 +360,94 @@ void shootingenemy::downenemsh(){
 
 }
 
+void shootingenemy::staticupsh(){
+	display();
+	if(counter==firerate){
+         	xb = xloc;
+         	yb = yloc-1;
+         	identity =  1 ;
+         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95){
+         		 addbullet();
+         		 addblank();
+				 }
+        flag=true;
+        }
+		stampa_bullets();
+    	if(counter!=firerate){counter++;}
+    	if(counter==firerate && flag==true){
+         	counter=0; 
+    	}
+    	flag=false;
 
 
+}
+
+void shootingenemy::staticleftsh(){
+	display();
+	if(counter==firerate){
+         	xb = xloc-1;
+         	yb = yloc;
+         	identity =  2 ;
+         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95){
+         		 addbullet();
+         		 addblank();
+				 }
+        flag=true;
+        }
+		stampa_bullets();
+    	if(counter!=firerate){counter++;}
+    	if(counter==firerate && flag==true){
+         	counter=0; 
+    	}
+    	flag=false;
+
+
+}
+
+void shootingenemy::staticdownsh(){
+	display();
+	if(counter==firerate){
+         	xb = xloc;
+         	yb = yloc+1;
+         	identity =  3 ;
+         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95){
+         		 addbullet();
+         		 addblank();
+				 }
+        flag=true;
+        }
+		stampa_bullets();
+    	if(counter!=firerate){counter++;}
+    	if(counter==firerate && flag==true){
+         	counter=0; 
+    	}
+    	flag=false;
+
+
+}
+
+
+void shootingenemy::staticrightsh(){
+	display();
+	if(counter==firerate){
+         	xb = xloc+1;
+         	yb = yloc;
+         	identity =  4 ;
+         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95){
+         		 addbullet();
+         		 addblank();
+				 }
+        flag=true;
+        }
+		stampa_bullets();
+    	if(counter!=firerate){counter++;}
+    	if(counter==firerate && flag==true){
+         	counter=0; 
+    	}
+    	flag=false;
+
+
+}
 
 
 void shootingenemy:: addbullet(){
