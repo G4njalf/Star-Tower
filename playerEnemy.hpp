@@ -10,8 +10,8 @@ using namespace std;
 void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n1,coordEnemy n2,coordEnemy n3, int life, int score)
 {
     srand((unsigned)time(0));
-    //int idconfig = rand() % 3;
-    int idconfig = 1;
+    int idconfig = rand() % 3;
+    //int idconfig = 1;
 
     if(idconfig == 0 && idmap==0)
     {
@@ -100,9 +100,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
          }
          while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
          mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
+        /*nemico1->undisplay();
         nemico2->undisplay();
-        nemico3->undisplay();
+        nemico3->undisplay();*/
      }
 
      if(idconfig == 1 && idmap==0)
@@ -194,9 +194,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
 	    }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
          mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-         nemico1->undisplay();
+         /*nemico1->undisplay();
          nemico2->undisplay();
-         nemico3->undisplay();
+         nemico3->undisplay();*/
     }
 
     if(idconfig == 2 && idmap==0)
@@ -274,9 +274,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
 	    }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
         mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
+        /*nemico1->undisplay();
         nemico2->undisplay();
-        nemico3->undisplay();
+        nemico3->undisplay();*/
     }
 
     if(idconfig == 0 && idmap==1)
@@ -367,9 +367,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
 	    }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
         mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
+        /*nemico1->undisplay();
         nemico2->undisplay();
-        nemico3->undisplay();
+        nemico3->undisplay();*/
     }
 
     if(idconfig == 1 && idmap==1)
@@ -458,9 +458,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
 	    }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
         mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
+        /*nemico1->undisplay();
         nemico2->undisplay();
-        nemico3->undisplay();
+        nemico3->undisplay();*/
     }
 
     if(idconfig == 2 && idmap==1)
@@ -537,9 +537,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
 	    }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
         mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
+        /*nemico1->undisplay();
         nemico2->undisplay();
-        nemico3->undisplay();
+        nemico3->undisplay();*/
     }
 
     if(idconfig == 0 && idmap==2)
@@ -641,9 +641,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
 	    }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
         mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
+        /*nemico1->undisplay();
         nemico2->undisplay();
-        nemico3->undisplay();
+        nemico3->undisplay();*/
     }
 
     if(idconfig == 1 && idmap==2)
@@ -732,9 +732,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
 	    }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
         mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
+       /* nemico1->undisplay();
         nemico2->undisplay();
-        nemico3->undisplay();
+        nemico3->undisplay();*/
     }
 
     if(idconfig == 2 && idmap==2)
@@ -812,9 +812,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
 	    }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
         mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
+        /*nemico1->undisplay();
         nemico2->undisplay();
-        nemico3->undisplay();
+        nemico3->undisplay();*/
     }
 
     if(idconfig == 0 && idmap==3)
@@ -905,9 +905,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
         }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
         mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
-        nemico2->undisplay();
-        nemico3->undisplay();
+        /*nemico1->undisplay();
+               nemico2->undisplay();
+               nemico3->undisplay();*/
     }
 
     if(idconfig == 1 && idmap==3)
@@ -997,9 +997,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
         }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
         mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
+       /* nemico1->undisplay();
         nemico2->undisplay();
-        nemico3->undisplay();
+        nemico3->undisplay();*/
     }
 
     if(idconfig == 2 && idmap==3)
@@ -1085,9 +1085,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,coordinates p,coordEnemy n
 	    }
         while(player->getmv()!='x' && life>0 && changemap(idmap,getcury(playwin),getcurx(playwin)) == 100);
         mvwaddch(playwin, player->currentY(), player->currentX(), ' ');
-        nemico1->undisplay();
+        /*nemico1->undisplay();
         nemico2->undisplay();
-        nemico3->undisplay();
+        nemico3->undisplay();*/
     }
 }
     
