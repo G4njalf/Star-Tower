@@ -14,3 +14,8 @@ MAIN:
 Ho principalmente utilizzato dei cicli while per far funzionare il programma, le condizioni di questi cicli sono dettate dal booleano "gameover": nel caso venga impostato su true il gioco finisce; e da un getch(): se si preme la "x" si esce manualmente dal gioco. 
 Per inserire le entità nella mappa ho usato solo dei puntatori in modo tale che se il personaggio, interagendo con l'entità, la distrugge o la raccoglie, posso farla "sparire" tramite il delete del puntatore. In questo modo l'entità non è più presente nella mappa e se il personaggio dovesse passare nel punto in cui c'era prima l'artefatto o il nemico, non verrà più attivato nessun trigger.
 Infine ho realizzato tramite un array e un ciclo la scritta "GAMEOVER" che si compone man mano una volta finito il gioco.
+
+
+------------------
+
+AGGIUNGERE PARAMETRO DEL CARATTERE DEL PERSONAGGIO IN CHANGE MAP E FARE CHE CAMBI MAPPA SOLO COL CARATTERE DEL NEMICO
