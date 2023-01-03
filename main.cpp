@@ -1,4 +1,4 @@
-#include"/mnt/c/Users/Lenovo/Desktop/UNIVERSITA/PROGRAMMAZIONE/Progetto/map/map.hpp"
+#include"map.hpp"
 
 int main()
 {
