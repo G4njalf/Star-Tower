@@ -263,7 +263,7 @@ void shootingenemy::rightenemsh(){
          	xb = xloc+1;
          	yb = yloc;
          	identity =  4 ;
-         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95){
+         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95 && mvwinch(curwin, yb , xb)!='X'){
          		 addbullet();
           		addblank();
 				}
@@ -271,7 +271,7 @@ void shootingenemy::rightenemsh(){
         }
 		stampa_bullets();
     	if(counter!=firerate){counter++;}
-    	if(counter==firerate && flag==true){
+    	if(counter==firerate && flag){
         	counter=0; 
     	}
     	flag=false;
@@ -297,7 +297,7 @@ void shootingenemy::upenemsh(){
          	xb = xloc;
          	yb = yloc-1;
          	identity =  1 ;
-         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95){
+         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95 && mvwinch(curwin, yb , xb)!='X'){
          		 addbullet();
          		 addblank();
 				 }
@@ -305,7 +305,7 @@ void shootingenemy::upenemsh(){
         }
 		stampa_bullets();
     	if(counter!=firerate){counter++;}
-    	if(counter==firerate && flag==true){
+    	if(counter==firerate && flag){
          	counter=0; 
     	}
     	flag=false;
@@ -331,7 +331,7 @@ void shootingenemy::leftenemsh(){
          	xb = xloc-1;
          	yb = yloc;
          	identity =  2 ;
-         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95){
+         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95 && mvwinch(curwin, yb , xb)!='X'){
          		 addbullet();
           		addblank();
 				}
@@ -339,7 +339,7 @@ void shootingenemy::leftenemsh(){
         }
 		stampa_bullets();
     	if(counter!=firerate){counter++;}
-    	if(counter==firerate && flag==true){
+    	if(counter==firerate && flag){
         	counter=0; 
     	}
     	flag=false;
@@ -364,7 +364,7 @@ void shootingenemy::downenemsh(){
          	xb = xloc;
          	yb = yloc+1;
          	identity =  3 ;
-         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95){
+         	if(mvwinch(curwin, yb , xb)!=124 && mvwinch(curwin, yb , xb)!=95 && mvwinch(curwin, yb , xb)!='X'){
           		addbullet();
           		addblank();
 				}
@@ -372,7 +372,7 @@ void shootingenemy::downenemsh(){
         }
 		stampa_bullets();
     	if(counter!=firerate){counter++;}
-    	if(counter==firerate && flag==true){
+    	if(counter==firerate && flag){
          	counter=0; 
     	}
     	flag=false;
@@ -386,7 +386,7 @@ void shootingenemy::downenemsh(){
 void shootingenemy:: addbullet(){
 	lnemico tmp = p;
 	if(p==NULL){
-    if(mvwinch(curwin, yb , xb)!=124 ||mvwinch(curwin, yb , xb)!=95){
+    if(mvwinch(curwin, yb , xb)!=124 ||mvwinch(curwin, yb , xb)!=95 || mvwinch(curwin, yb , xb)!='X'){
 		p = new nemico;
 		p->bx=xb;
 		p->by=yb;
@@ -398,7 +398,7 @@ void shootingenemy:: addbullet(){
 		while(tmp->next!=NULL){
 			tmp = tmp->next;
 		}
-    if(mvwinch(curwin, yb , xb)!=124 ||mvwinch(curwin, yb , xb)!=95){
+    if(mvwinch(curwin, yb , xb)!=124 ||mvwinch(curwin, yb , xb)!=95 || mvwinch(curwin, yb , xb)!='X'){
 		tmp->next = new nemico;
 		tmp = tmp->next;
 		tmp->bx=xb;
@@ -418,7 +418,7 @@ void shootingenemy:: remove_bullet(){
 	while(aux!=NULL){
     bby = aux->by;
     bbx = aux->bx;
-		if(mvwinch(curwin, bby , bbx)==124 ||mvwinch(curwin, bby , bbx)==95){
+		if(mvwinch(curwin, bby , bbx)==124 ||mvwinch(curwin, bby , bbx)==95 || mvwinch(curwin, bby , bbx)=='X'){
 			tmp = aux;
 			if(prec == NULL){
 				p = p->next ;
@@ -504,7 +504,7 @@ void shootingenemy:: remove_blank(){
 	while(aux!=NULL){
     bby = aux->by;
     bbx = aux->bx;
-		if(mvwinch(curwin, bby , bbx)==124 ||mvwinch(curwin, bby , bbx)==95){
+		if(mvwinch(curwin, bby , bbx)==124 ||mvwinch(curwin, bby , bbx)==95 || mvwinch(curwin, bby , bbx)=='X'){
 			tmp = aux;
 			if(prec == NULL){
 				b = b->next ;
@@ -525,7 +525,7 @@ void shootingenemy:: remove_blank(){
 void shootingenemy:: addblank(){
 	lnemico tmp = b;
 	if(b==NULL){
-    if(mvwinch(curwin, yb , xb)!=124 ||mvwinch(curwin, yb , xb)!=95){
+    if(mvwinch(curwin, yb , xb)!=124 ||mvwinch(curwin, yb , xb)!=95 || mvwinch(curwin, yb , xb)!='X'){
 		b = new nemico;
 		b->bx=xloc;
 		b->by=yloc;
@@ -537,7 +537,7 @@ void shootingenemy:: addblank(){
 		while(tmp->next!=NULL){
 			tmp = tmp->next;
 		}
-    if(mvwinch(curwin, yb , xb)!=124 ||mvwinch(curwin, yb , xb)!=95){
+    if(mvwinch(curwin, yb , xb)!=124 ||mvwinch(curwin, yb , xb)!=95 || mvwinch(curwin, yb , xb)!='X'){
 		tmp->next = new nemico;
 		tmp = tmp->next;
 		tmp->bx=xloc;

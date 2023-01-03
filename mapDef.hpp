@@ -60,6 +60,10 @@ public:
         statistiche(stats);
     };
 
+    void open_right_exit(){
+        doorx.RightExitOpen=true;
+    }
+
     coordinates getcoordinatesP() // coordinate dove spawna il player
     {
         coordinates p;

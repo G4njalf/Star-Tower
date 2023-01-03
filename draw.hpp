@@ -112,7 +112,7 @@ void layouts(int x, WINDOW* room, coordinates cord, door doorx)
             mvwprintw(room,22,1,"_____________________________________________|    |___________________________");
 
             //porta da uscire LEFT (6 spazi se oriz , 3 spazi se verti)
-           if (!doorx.LeftExitOpen)
+            if (!doorx.LeftExitOpen)
             {
                 cord.columns = 10;
                 cord.rows = 15;

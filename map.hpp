@@ -22,6 +22,8 @@ struct mappaAlbero
     mappaAlbero* right;
     mappaAlbero* parent;
     int key;
+    int enemies_life[3];
+    bool key_taken;
 };
 
 typedef mappaAlbero* pmappaAlbero;
@@ -109,9 +111,11 @@ void map(bool exit)
         refresh();*/
         int life=1000;
         int score=0;
-        int vita_nemici[35];
-        for(int i=0; i<36;i++){
-            vita_nemici[i]=100;
+        //int vita_nemici[35];
+        bool nohpup[3];
+        bool already_added[35];
+        for(int i=0; i<4; i++){
+            nohpup[i]=false;
         }
         acsizet.columns = 80;
         acsizet.rows = 24;
@@ -124,6 +128,10 @@ void map(bool exit)
         Pwindow stats = newwin(5, 80, 23, 0);   //stats e' la mappa che mostra le statistiche
         Pwindow room = newwin(acsizet.rows,acsizet.columns,0,0);
         head = create(head,StanzaRandom(1,0,room),where,id);
+        for(int i=0; i<3;i++){
+            head->enemies_life[i]=100;
+        }
+        head->key_taken=false;
         head->val.draw(stats);
         mvwaddstr(room,21,1,"first");
         wrefresh(room);
@@ -131,7 +139,7 @@ void map(bool exit)
         //player(room,head->val.getcoordinatesP(),head->val.layout);
         
 
-        gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, vita_nemici);
+        gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, head->enemies_life, nohpup, already_added, head->key_taken);
     //main cycle
     while (!exit) // !exit con menu // true senza menu // gestire il gameover
     {   
@@ -146,14 +154,14 @@ void map(bool exit)
                 wrefresh(room);
                 wrefresh(stats);
                 profondita--;
-                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, vita_nemici);
+                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, head->enemies_life, nohpup, already_added, head->key_taken);
                 //player(room,head->val.getcoordinatesP(),head->val.layout);
             }
             else
             {
                 mvaddstr(21,1,"0b");
                 wrefresh(room);
-                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, vita_nemici);
+                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, head->enemies_life, nohpup, already_added, head->key_taken);
                 //player(room,head->val.getcoordinatesP(),head->val.layout);
             }
         }
@@ -164,11 +172,15 @@ void map(bool exit)
                 where = true;
                 room = newwin(acsizet.rows,acsizet.columns,0,0);
                 head = create(head,StanzaRandom(1,0,room),where,id+1);
+                for(int i=0; i<3;i++){
+                    head->enemies_life[i]=100;
+                }
+                head->key_taken=false;
                 head->val.draw(stats);
                 mvaddstr(21,1,"1a");
                 wrefresh(room);
                 wrefresh(stats);
-                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, vita_nemici);
+                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, head->enemies_life, nohpup, already_added, head->key_taken);
                 //player(room,head->val.getcoordinatesP(),head->val.layout);
                 counter++;
                 profondita++;
@@ -180,7 +192,7 @@ void map(bool exit)
                 mvaddstr(21,1,"1b");
                 wrefresh(room);
                 wrefresh(stats);
-                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, vita_nemici);
+                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, head->enemies_life, nohpup, already_added, head->key_taken);
                 //player(room,head->val.getcoordinatesP(),head->val.layout);
                 profondita++;
             }
@@ -188,7 +200,7 @@ void map(bool exit)
             {
                 mvaddstr(21,1,"1c");
                 wrefresh(room);
-                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, vita_nemici);
+                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, head->enemies_life, nohpup, already_added, head->key_taken);
                 //player(room,head->val.getcoordinatesP(),head->val.layout);
             }
         }
@@ -199,11 +211,15 @@ void map(bool exit)
                 where = false;
                 room = newwin(acsizet.rows,acsizet.columns,0,0);
                 head = create(head,StanzaRandom(1,0,room),where,id+1);
+                for(int i=0; i<3;i++){
+                    head->enemies_life[i]=100;
+                }
+                head->key_taken=false;
                 head->val.draw(stats);
                 mvaddstr(21,1,"2a");
                 wrefresh(room);
                 wrefresh(stats);
-                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, vita_nemici);
+                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, head->enemies_life, nohpup, already_added, head->key_taken);
                 //player(room,head->val.getcoordinatesP(),head->val.layout);
                 counter++;
                 profondita++;
@@ -215,7 +231,7 @@ void map(bool exit)
                 mvaddstr(21,1,"2b");
                 wrefresh(room);
                 wrefresh(stats);
-                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, vita_nemici);
+                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, head->enemies_life, nohpup, already_added, head->key_taken);
                 //player(room,head->val.getcoordinatesP(),head->val.layout);
                 profondita++;
             }
@@ -223,10 +239,19 @@ void map(bool exit)
             {
                 mvaddstr(21,1,"2c");
                 wrefresh(room);
-                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, vita_nemici);
+                gioco(room,stats,head->val.layout,head->val.id,head->val.getcoordinatesP(),head->val.getcoordinatesE1(),head->val.getcoordinatesE2(),head->val.getcoordinatesE3(), life, score, head->enemies_life, nohpup, already_added, head->key_taken);
                 //player(room,head->val.getcoordinatesP(),head->val.layout);
             }
-        }      
+        }
+        if(life<=0){
+            exit = true;
+        }
     }
+    wclear(room);
+    wclear(stats);
+    wrefresh(room);
+    wrefresh(stats);
+
+    gameover();
    // }
 }

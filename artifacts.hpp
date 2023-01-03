@@ -20,6 +20,7 @@ public:
     bool collected (int y, int x);
     bool return_remove();
     void canttake();
+    void its_removed();
 
 protected:
     int posX, posY;
@@ -54,6 +55,9 @@ artifact :: artifact(WINDOW * win, int y, int x, char c){
     void artifact :: clear() {
         mvwaddch(window, posY, posX, ' ');
     }
+    void artifact :: its_removed(){
+        remove = true;
+    }
     bool artifact :: return_remove(){
         return remove;
     }
@@ -65,21 +69,85 @@ artifact :: artifact(WINDOW * win, int y, int x, char c){
     }
 
 
+
+
+
+
+
 class key : public artifact{
 public:
     key(WINDOW* win, int y, int x, char c);
     void near_door();
     bool return_used();
+    void print_key_if_necessary(int layout,int vita_e1, int vit_e2, int vita_e3);
+    bool return_taken();
+    void taken_true();
+    void open_door_if_necessary(int layout, int Py, int Px);
+
 protected:
     bool used=false;
+    bool taken=false;
 };
 key :: key(WINDOW* win, int y, int x, char c):artifact(win, y, x, c){}
 bool key ::return_used() {
     return used;
 }
 void key :: near_door(){
-    //se la porta e' in prossimita', la porta si apre e la chiave si cancella
+    //se la porta è di una coordinata avanti rispetto al player (faccio la collisione tra x del player e x-1 della porta) e se taken è true, mette open a true e cancella le XXXX che sbarrano la porta, la porta si apre e la chiave si cancella
 }
+void key:: print_key_if_necessary(int layout, int vita_e1, int vita_e2, int vita_e3){
+    if(vita_e1<=0 && vita_e2<=0 && vita_e3<=0 && !taken){    
+        if(layout==0){
+            posY=14;
+            posX=7;
+            mvwaddch(window, posY, posX, 'K'); 
+        }
+        else if (layout==1){ 
+            posY=12;
+            posX=59;                                      
+            mvwaddch(window, posY, posX, 'K');
+        }
+        else if (layout==2){
+            posY=20;
+            posX=61; 
+            mvwaddch(window, posY, posX, 'K');
+        }
+        else if (layout==3){
+            posY=13;
+            posX=57;
+            mvwaddch(window, posY, posX, 'K');
+        }
+    }
+}
+    bool key :: return_taken(){
+        return taken;
+    }
+    void key :: taken_true(){
+        taken=true;
+    }
+    // void key::open_door_if_necessary(int layout, int Py, int Px){
+    //     if(taken && !used){
+    //         if(layout==0){
+    //             if(Px>73) mvwaddch()
+    //         }
+    //         if(layout==1){
+                
+    //         }
+    //         if(layout==2){
+                
+    //         }
+    //         if(layout==3){
+                
+    //         }
+    //     }
+    // }
+
+
+
+
+
+
+
 
 class coins : public artifact{
 public:
