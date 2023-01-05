@@ -7,11 +7,12 @@
 #include "enemyDef.hpp"
 using namespace std;
 
+void block_spawn_exit_first_layout(WINDOW *win, int layout, bool first_map);
 
-void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p,coordEnemy n1,coordEnemy n2,coordEnemy n3, int &life, int &score, int vita_nemici[], bool nohpup[], bool already_added[], bool &key_taken)
+void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p,coordEnemy n1,coordEnemy n2,coordEnemy n3, int &life, int &score, int vita_nemici[], bool &nohpup, bool already_added[], bool &key_taken, bool &key_used, bool &nocoins, bool first_map)
 {
-    srand((unsigned)time(0)); 
-    //idconfig=0;
+    block_spawn_exit_first_layout(playwin,idmap, first_map);
+    srand((unsigned)time(0));
     if(idconfig == 0 && idmap==0)
     {
         /*prima configurazione prima mappa*/
@@ -27,9 +28,9 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         artifact * hpup = new artifact(playwin, 17, 12, '+');
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
-        if(nohpup[0]){
-            hpup->its_removed();
-        }
+        if(key_used) chiave->used_true();
+        
+        if(nohpup)hpup->its_removed();
         nodelay(playwin,true);
 
         do {
@@ -37,7 +38,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
-            //chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
 
             if(!hpup->return_remove()){         //disegno finchè non viene raccolto
                 hpup->draw();
@@ -116,8 +117,10 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
-        nohpup[0]=hpup->return_remove();
+        key_used=chiave->return_used();
         
+
+        nohpup=hpup->return_remove();
      }
 
      else if(idconfig == 1 && idmap==0)
@@ -133,15 +136,18 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         coins * monete = new coins(playwin, 7, 8, 184, 14, 9, idmap);
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
+        if(key_used) chiave->used_true();
         prev=monete->return_counter();
-        monete->all_coins();        //inizializzo le monete
         nodelay(playwin,true);
+        if(nocoins) monete->its_removed();
+        else monete->all_coins();    //inizializzo le monete se non sono già state raccolte in questo nodo
 
          do {
             chiave->print_key_if_necessary(idmap, nemico1->currentlife(), nemico2->currentlife(), nemico3->currentlife());
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
             
             if (!monete->return_remove()){      //finche' non si raccolgono sono stampate
                 monete->print_coins();
@@ -174,32 +180,32 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             {
                 nemico1->downenemsh();
             }
-            else if(nemico1->currentlife()<=0 && !already_added[3])
+            else if(nemico1->currentlife()<=0 && !already_added[0])
             {
                 nemico1->undisplaybullets();
                 score = score+50;
-                already_added[3]=true;
+                already_added[0]=true;
             }
             if(!nemico2->return_kill()) //nemico2->life()>0
             {      /*secondo nemico*/
                 nemico2->rightenemsh();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[4])
+            else if(nemico2->currentlife()<=0 && !already_added[1])
             {
                 nemico2->undisplaybullets();
                 score = score+50;
-                already_added[4]=true;
+                already_added[1]=true;
             }
 
             if(!nemico3->return_kill()) //nemico3->life()>0
             {      /*terzo nemico*/
                 nemico3->upenemsh();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[5])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 nemico3->undisplaybullets();
                 score = score+50;
-                already_added[5]=true;
+                already_added[2]=true;
             }
             if(mvwinch(playwin, player->currentY(), player->currentX())=='1' || mvwinch(playwin, player->currentY(), player->currentX())=='2' || mvwinch(playwin, player->currentY(), player->currentX())=='3')
             {
@@ -222,6 +228,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
+        key_used=chiave->return_used();
          /*nemico1->undisplay();
          nemico2->undisplay();
          nemico3->undisplay();*/
@@ -235,6 +242,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         shootingenemy * nemico3= new shootingenemy(playwin,n3.row3,n3.col3,'3',vita_nemici[2],n3.col3+1,0,n3.col3-1,0,7);
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
+        if(key_used) chiave->used_true();
         nemico1->set_killed_status();
         nemico2->set_killed_status();
         nemico3->set_killed_status();
@@ -245,6 +253,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
             
             player->display();
 	        if(wgetch(playwin) == ERR) //che cazzo vuol dire?
@@ -269,31 +278,31 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
                 nemico1->display();
                 nemico1->horizontalmove();
             }
-            else if(nemico1->currentlife()<=0 && !already_added[6])
+            else if(nemico1->currentlife()<=0 && !already_added[0])
             {
                 score = score+50;
-                already_added[6]=true;
+                already_added[0]=true;
             }
             if(!nemico2->return_kill())
             {
                 nemico2->upenemsh();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[7])
+            else if(nemico2->currentlife()<=0 && !already_added[1])
             {
                 nemico2->undisplaybullets();
                 score = score+50;
-                already_added[7]=true;
+                already_added[1]=true;
             }
 
             if(!nemico3->return_kill())
             {
                 nemico3->upenemsh();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[8])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 nemico3->undisplaybullets();
                 score = score+50;
-                already_added[8]=true;
+                already_added[2]=true;
             }
             if(mvwinch(playwin, player->currentY(), player->currentX())=='1' || mvwinch(playwin, player->currentY(), player->currentX())=='2' || mvwinch(playwin, player->currentY(), player->currentX())=='3')
             {
@@ -315,6 +324,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
+        key_used=chiave->return_used();
         /*nemico1->undisplay();
         nemico2->undisplay();
         nemico3->undisplay();*/
@@ -332,15 +342,15 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         artifact * hpup = new artifact(playwin, 19, 58, '+');
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
-        if(nohpup[1]){
-            hpup->its_removed();
-        }
+        if(key_used) chiave->used_true();
+        if(nohpup)hpup->its_removed();
 
         do {
             chiave->print_key_if_necessary(idmap, nemico1->currentlife(), nemico2->currentlife(), nemico3->currentlife());
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
             
             if(!hpup->return_remove()){
                 hpup->draw();
@@ -369,33 +379,33 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             {     /*primo nemico*/
                 nemico1->leftenemsh();
             }   //tipo di movimento
-            else if(nemico1->currentlife()<=0 && !already_added[9])
+            else if(nemico1->currentlife()<=0 && !already_added[0])
             {
                 nemico1->undisplaybullets();
                 score = score+50;
-                already_added[9]=true;
+                already_added[0]=true;
             }
 
             if(!nemico2->return_kill()) //nemico2->life()>0
             {      /*secondo nemico*/
                 nemico2->leftenemsh();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[10])
+            else if(nemico2->currentlife()<=0 && !already_added[1])
             {
                 nemico2->undisplaybullets();
                 score = score+50;
-                already_added[10]=true;
+                already_added[1]=true;
             }
 
             if(!nemico3->return_kill()) //nemico3->life()>0
             {      /*terzo nemico*/
                 nemico3->leftenemsh();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[11])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 nemico3->undisplaybullets();
                 score = score+50;
-                already_added[11]=true;
+                already_added[2]=true;
             }
             if(!hpup->return_remove()){        //serve a raccogliere l'artefatto
                 player->healtup(hpup, score);
@@ -424,7 +434,8 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
-        nohpup[1]=hpup->return_remove();
+        key_used=chiave->return_used();
+        nohpup=hpup->return_remove();
         /*nemico1->undisplay();
         nemico2->undisplay();
         nemico3->undisplay();*/
@@ -443,14 +454,17 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         coins * monete = new coins(playwin, 8, 72, 184, 14, 15, idmap);
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
+        if(key_used) chiave->used_true();
         prev=monete->return_counter();
-        monete->all_coins();
+        if(nocoins) monete->its_removed();
+        else monete->all_coins();
 
         do {
             chiave->print_key_if_necessary(idmap, nemico1->currentlife(), nemico2->currentlife(), nemico3->currentlife());
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
             
             if (!monete->return_remove()){
                 monete->print_coins();
@@ -478,35 +492,35 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             if (mvwinch(playwin,nemico3->getenemy(),nemico3->getenemx())=='.'||mvwinch(playwin,nemico3->getenemy()+1,nemico3->getenemx())=='.'){
                 nemico3->damage(player->currdamage());
             }
-            if(!nemico1->return_kill()) //nemico1->life()>0
-            {     /*primo nemico*/
+            if(!nemico1->return_kill())
+            {
                 nemico1->downenemsh();
-            }   //tipo di movimento
-            else if(nemico1->currentlife()<=0 && !already_added[12])
+            }
+            else if(nemico1->currentlife()<=0 && !already_added[0])
             {
                 nemico1->undisplaybullets();
                 score = score+50;
-                already_added[12]=true;
+                already_added[0]=true;
             }
-            if(!nemico2->return_kill()) //nemico2->life()>0
-            {      /*secondo nemico*/
+            if(!nemico2->return_kill())
+            {
                 nemico2->leftenemsh();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[13])
+            else if(nemico2->currentlife()<=0 && !already_added[1])
             {
                 nemico2->undisplaybullets();
                 score = score+50;
-                already_added[13]=true;
+                already_added[1]=true;
             }
-            if(!nemico3->return_kill()) //nemico3->life()>0
-            {      /*terzo nemico*/
+            if(!nemico3->return_kill())
+            {
                 nemico3->upenemsh();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[14])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 nemico3->undisplaybullets();
                 score = score+50;
-                already_added[14]=true;
+                already_added[2]=true;
             }
             if(mvwinch(playwin, player->currentY(), player->currentX())=='1' || mvwinch(playwin, player->currentY(), player->currentX())=='2' || mvwinch(playwin, player->currentY(), player->currentX())=='3')
             {
@@ -529,6 +543,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
+        key_used=chiave->return_used();
         /*nemico1->undisplay();
         nemico2->undisplay();
         nemico3->undisplay();*/
@@ -545,12 +560,14 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         nemico3->set_killed_status();
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
+        if(key_used) chiave->used_true();
 
         do {
             chiave->print_key_if_necessary(idmap, nemico1->currentlife(), nemico2->currentlife(), nemico3->currentlife());
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
             
             player->display();
 	        if(wgetch(playwin) == ERR) //che cazzo vuol dire?
@@ -574,31 +591,31 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             {     /*primo nemico*/
                 nemico1->leftenemsh();
             }   //tipo di movimento
-            else if(nemico1->currentlife()<=0 && !already_added[15])
+            else if(nemico1->currentlife()<=0 && !already_added[0])
             {
                 nemico1->undisplaybullets();
                 score = score+50;
-                already_added[15]=true;
+                already_added[0]=true;
             }
             if(!nemico2->return_kill())
             {
                 nemico2->verticalmove();
                 nemico2->display();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[16])
+            else if(nemico2->currentlife()<=0 && !already_added[1])
             {
                 score = score+50;
-                already_added[16]=true;
+                already_added[1]=true;
             }
             if(!nemico3->return_kill())
             {
                 nemico3->upenemsh();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[17])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 nemico3->undisplaybullets();
                 score = score+50;
-                already_added[17]=true;
+                already_added[2]=true;
             }
             if(mvwinch(playwin, player->currentY(), player->currentX())=='1' || mvwinch(playwin, player->currentY(), player->currentX())=='2' || mvwinch(playwin, player->currentY(), player->currentX())=='3')
             {
@@ -621,6 +638,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
+        key_used=chiave->return_used();
         /*nemico1->undisplay();
         nemico2->undisplay();
         nemico3->undisplay();*/
@@ -635,13 +653,12 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         shootingenemy * nemico3= new shootingenemy(playwin,n3.row1,n3.col1,'3',vita_nemici[2],n3.col1+2,0,n3.col1-2,0,7);
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
+        if(key_used) chiave->used_true();
         nemico1->set_killed_status();
         nemico2->set_killed_status();
         nemico3->set_killed_status();
         artifact * hpup = new artifact(playwin, 19, 67, '+');
-        if(nohpup[2]){
-            hpup->its_removed();
-        }
+        if(nohpup)hpup->its_removed();
         coins * monete = new coins(playwin, 21, 26, 184, 11, 39, idmap);
         prev=monete->return_counter();
         monete->all_coins();
@@ -651,6 +668,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
             
             if (!monete->return_remove()){
                 monete->print_coins();
@@ -685,33 +703,33 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             {     /*primo nemico*/
                 nemico1->rightenemsh();
             }   //tipo di movimento
-            else if(nemico1->currentlife()<=0 && !already_added[18])  //nemico1->life()==0
+            else if(nemico1->currentlife()<=0 && !already_added[0])  //nemico1->life()==0
             {
                 nemico1->undisplaybullets();
                 score = score+50;
-                already_added[18]=true;
+                already_added[0]=true;
             }
 
             if(!nemico2->return_kill()) //nemico2->life()>0
             {      /*secondo nemico*/
                 nemico2->rightenemsh();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[19]) //nemico2->life()==0
+            else if(nemico2->currentlife()<=0 && !already_added[1]) //nemico2->life()==0
             {
                 nemico2->undisplaybullets();
                 score = score+50;
-                already_added[19]=true;
+                already_added[1]=true;
             }
 
             if(!nemico3->return_kill()) //nemico3->life()>0
             {      /*terzo nemico*/
                 nemico3->upenemsh();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[20])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 nemico3->undisplaybullets();
                 score = score+50;
-                already_added[20]=true;
+                already_added[2]=true;
             }
             if(!hpup->return_remove()){        //serve a raccogliere l'artefatto
                 player->healtup(hpup, score);
@@ -741,7 +759,8 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
-        nohpup[2]=hpup->return_remove();
+        key_used=chiave->return_used();
+        nohpup=hpup->return_remove();
         /*nemico1->undisplay();
         nemico2->undisplay();
         nemico3->undisplay();*/
@@ -761,6 +780,8 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         prev=monete->return_counter();
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
+        if(key_used) chiave->used_true();
+        if(nocoins) monete->its_removed();
         monete->all_coins();
 
         do {
@@ -768,6 +789,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
             
             if (!monete->return_remove()){
                 monete->print_coins();
@@ -799,32 +821,32 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             {
                 nemico1->rightenemsh();
             }   //tipo di movimento e score
-            else if(nemico1->currentlife()<=0 && !already_added[21])
+            else if(nemico1->currentlife()<=0 && !already_added[0])
             {
                 nemico1->undisplaybullets();
                 score = score+50;
-                already_added[21]=true;
+                already_added[0]=true;
             }
             if(!nemico2->return_kill())
             {
                 nemico2->leftenemsh();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[22])
+            else if(nemico2->currentlife()<=0 && !already_added[1])
             {
                 nemico2->undisplaybullets();
                 score = score+50;
-                already_added[22]=true;
+                already_added[1]=true;
             }
 
             if(!nemico3->return_kill())
             {
                 nemico3->rightenemsh();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[23])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 nemico3->undisplaybullets();
                 score = score+50;
-                already_added[23]=true;
+                already_added[2]=true;
             }
             if(mvwinch(playwin, player->currentY(), player->currentX())=='1' || mvwinch(playwin, player->currentY(), player->currentX())=='2' || mvwinch(playwin, player->currentY(), player->currentX())=='3')
             {
@@ -846,6 +868,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
+        key_used=chiave->return_used();
        /* nemico1->undisplay();
         nemico2->undisplay();
         nemico3->undisplay();*/
@@ -862,12 +885,14 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         nemico3->set_killed_status();
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
+        if(key_used) chiave->used_true();
 
         do {
             chiave->print_key_if_necessary(idmap, nemico1->currentlife(), nemico2->currentlife(), nemico3->currentlife());
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
             
             player->display();
 	        if(wgetch(playwin) == ERR) //che cazzo vuol dire?
@@ -891,21 +916,21 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             {
                 nemico1->rightenemsh();
             }
-            else if(nemico1->currentlife()<=0 && !already_added[24])
+            else if(nemico1->currentlife()<=0 && !already_added[0])
             {
                 nemico1->undisplaybullets();
                 score = score+50;
-                already_added[24]=true;
+                already_added[0]=true;
             }
             if(!nemico2->return_kill())
             {
                 nemico2->leftenemsh();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[25])
+            else if(nemico2->currentlife()<=0 && !already_added[1])
             {
                 nemico2->undisplaybullets();
                 score = score+50;
-                already_added[25]=true;
+                already_added[1]=true;
             }
 
             if(!nemico3->return_kill())
@@ -913,10 +938,10 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
                 nemico3->horizontalmove();
                 nemico3->display();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[26])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 score = score+50;
-                already_added[26]=true;
+                already_added[2]=true;
             }
             if(mvwinch(playwin, player->currentY(), player->currentX())=='1' || mvwinch(playwin, player->currentY(), player->currentX())=='2' || mvwinch(playwin, player->currentY(), player->currentX())=='3')
             {
@@ -939,6 +964,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
+        key_used=chiave->return_used();
         /*nemico1->undisplay();
         nemico2->undisplay();
         nemico3->undisplay();*/
@@ -954,17 +980,17 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         nemico1->set_killed_status();
         nemico2->set_killed_status();
         nemico3->set_killed_status();
-        if(nohpup[3]){
-            hpup->its_removed();
-        }
+        if(nohpup)hpup->its_removed();
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
+        if(key_used) chiave->used_true();
 
         do {
           chiave->print_key_if_necessary(idmap, nemico1->currentlife(), nemico2->currentlife(), nemico3->currentlife());
           if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
           
           if(!hpup->return_remove()){
                 hpup->draw();
@@ -992,33 +1018,33 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             {
                 nemico1->rightenemsh();
             }
-            else if(nemico1->currentlife()<=0 && !already_added[27])
+            else if(nemico1->currentlife()<=0 && !already_added[0])
             {
                 nemico1->undisplaybullets();
                 score = score+50;
-                already_added[27]=true;
+                already_added[0]=true;
             }
 
             if(!nemico2->return_kill())
             {
                 nemico2->leftenemsh();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[28])
+            else if(nemico2->currentlife()<=0 && !already_added[1])
             {
                 nemico2->undisplaybullets();
                 score = score+50;
-                already_added[28]=true;
+                already_added[1]=true;
             }
 
             if(!nemico3->return_kill())
             {
                 nemico3->rightenemsh();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[29])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 nemico3->undisplaybullets();
                 score = score+50;
-                already_added[29]=true;
+                already_added[2]=true;
             }
             if(!hpup->return_remove()){        //serve a raccogliere l'artefatto
                 player->healtup(hpup, score);
@@ -1048,7 +1074,8 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
-        nohpup[3]=hpup->return_remove();
+        key_used=chiave->return_used();
+        nohpup=hpup->return_remove();
         /*nemico1->undisplay();
                nemico2->undisplay();
                nemico3->undisplay();*/
@@ -1066,15 +1093,18 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         nemico3->set_killed_status();
         coins * monete = new coins(playwin, 11, 34, 184, 18, 46, idmap);
         prev=monete->return_counter();
+        if(nocoins) monete->its_removed();
         monete->all_coins();
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
+        if(key_used) chiave->used_true();
 
         do {
             chiave->print_key_if_necessary(idmap, nemico1->currentlife(), nemico2->currentlife(), nemico3->currentlife());
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
             
             if (!monete->return_remove()){
                 monete->print_coins();
@@ -1106,32 +1136,32 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
             {     /*primo nemico*/
                 nemico1->upenemsh();
             }   //tipo di movimento
-            else if(nemico1->currentlife()<=0 && !already_added[30])
+            else if(nemico1->currentlife()<=0 && !already_added[0])
             {
                 nemico1->undisplaybullets();
                 score = score+50;
-                already_added[30]=true;
+                already_added[0]=true;
             }
             if(!nemico2->return_kill()) //nemico2->life()>0
             {      /*secondo nemico*/
                 nemico2->upenemsh();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[31])
+            else if(nemico2->currentlife()<=0 && !already_added[1])
             {
                 nemico2->undisplaybullets();
                 score = score+50;
-                already_added[31]=true;
+                already_added[1]=true;
             }
 
             if(!nemico3->return_kill()) //nemico3->life()>0
             {      /*terzo nemico*/
                 nemico3->upenemsh();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[32])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 nemico3->undisplaybullets();
                 score = score+50;
-                already_added[32]=true;
+                already_added[2]=true;
             }
             if(mvwinch(playwin, player->currentY(), player->currentX())=='1' || mvwinch(playwin, player->currentY(), player->currentX())=='2' || mvwinch(playwin, player->currentY(), player->currentX())=='3')
             {
@@ -1154,6 +1184,7 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
+        key_used=chiave->return_used();
     }
 
     else if(idconfig == 2 && idmap==3)
@@ -1171,12 +1202,14 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         monete->all_coins();
         key*chiave= new key(playwin,0,0,'K' );
         if(key_taken) chiave->taken_true();
+        if(key_used) chiave->used_true();
 
         do {
             chiave->print_key_if_necessary(idmap, nemico1->currentlife(), nemico2->currentlife(), nemico3->currentlife());
             if(!chiave->return_taken()){
                 if(mvwinch(playwin,player->currentY(),player->currentX())=='K') chiave->taken_true(); 
             }
+            chiave->open_door_if_necessary(idmap, player->currentY(), player->currentX());
             
             if (!monete->return_remove()){
                 monete->print_coins();
@@ -1209,20 +1242,20 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
                 nemico1->horizontalmove();
                 nemico1->display();
             }   //tipo di movimento
-            else if(nemico1->currentlife()<=0 && !already_added[33])
+            else if(nemico1->currentlife()<=0 && !already_added[0])
             {
                 score = score+50;
-                already_added[33]=true;
+                already_added[0]=true;
             }
             if(!nemico2->return_kill()) //nemico2->life()>0
             {      /*secondo nemico*/
                 nemico2->horizontalmove();
                 nemico2->display();
             }
-            else if(nemico2->currentlife()<=0 && !already_added[34])
+            else if(nemico2->currentlife()<=0 && !already_added[1])
             {
                 score = score+50;
-                already_added[34]=true;
+                already_added[1]=true;
             }
 
             if(!nemico3->return_kill()) //nemico3->life()>0
@@ -1230,10 +1263,10 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
                 nemico3->verticalmove();
                 nemico3->display();
             }
-            else if(nemico3->currentlife()<=0 && !already_added[35])
+            else if(nemico3->currentlife()<=0 && !already_added[2])
             {
                 score = score+50;
-                already_added[35]=true;
+                already_added[2]=true;
             }
             if(mvwinch(playwin, player->currentY(), player->currentX())=='1' || mvwinch(playwin, player->currentY(), player->currentX())=='2' || mvwinch(playwin, player->currentY(), player->currentX())=='3')
             {
@@ -1252,10 +1285,41 @@ void gioco(WINDOW * playwin, WINDOW * stats,int idmap,int idconfig,coordinates p
         vita_nemici[1]=nemico2->currentlife();
         vita_nemici[2]=nemico3->currentlife();
         key_taken=chiave->return_taken();
+        key_used=chiave->return_used();
 
         /*nemico1->undisplay();
         nemico2->undisplay();
         nemico3->undisplay();*/
+    }
+}
+
+void block_spawn_exit_first_layout(WINDOW *win, int layout, bool first_map){
+    if(first_map){
+        if(layout==0){
+            mvwaddch(win, 2,4, '_');
+            mvwaddch(win, 2,5, '_');
+            mvwaddch(win, 2,6, '_');
+            mvwaddch(win, 2,7, '_');
+        }
+        if(layout==1){
+            mvwaddch(win, 2,4, '_');
+            mvwaddch(win, 2,5, '_');
+            mvwaddch(win, 2,6, '_');
+            mvwaddch(win, 2,7, '_');
+        }
+        if(layout==2){
+            mvwaddch(win, 2,63, '_');
+            mvwaddch(win, 2,64, '_');
+            mvwaddch(win, 2,65, '_');
+            mvwaddch(win, 2,66, '_');
+
+            
+        }
+        if(layout==3){
+            mvwaddch(win, 4,76, '|');
+            mvwaddch(win, 5,76, '|');
+            mvwaddch(win, 6,76, '|');
+        }
     }
 }
     

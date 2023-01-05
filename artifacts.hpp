@@ -83,6 +83,7 @@ public:
     bool return_taken();
     void taken_true();
     void open_door_if_necessary(int layout, int Py, int Px);
+    void used_true();
 
 protected:
     bool used=false;
@@ -125,22 +126,89 @@ void key:: print_key_if_necessary(int layout, int vita_e1, int vita_e2, int vita
     void key :: taken_true(){
         taken=true;
     }
-    // void key::open_door_if_necessary(int layout, int Py, int Px){
-    //     if(taken && !used){
-    //         if(layout==0){
-    //             if(Px>73) mvwaddch()
-    //         }
-    //         if(layout==1){
+    void key :: used_true(){
+        used=true;
+    }
+    void key::open_door_if_necessary(int layout, int Py, int Px){
+        if(taken){
+            if(layout==0 && !used){
+                if(Px>=69 && Py<13 && Py>9){
+                    mvwaddch(window,10,71,' ');
+                    mvwaddch(window,11,71,' ');
+                    mvwaddch(window,12,71,' ');
+                    mvwaddch(window,12,71,'_');
+                    used=true;
+
+                }
+            }
+            else if(layout==1 && !used){
+                if(Py>18 && Px>44 && Px<52){
+                    mvwaddch(window,20,46,' ');
+                    mvwaddch(window,20,47,' ');
+                    mvwaddch(window,20,48,' ');
+                    mvwaddch(window,20,49,' ');
+                    mvwaddch(window,20,50,' ');
+                    mvwaddch(window,20,51,' ');
+                    used=true;
+                }
                 
-    //         }
-    //         if(layout==2){
+            }
+            else if(layout==2 && !used){
+                if(Px>68){
+                mvwaddch(window,13,70,' ');
+                mvwaddch(window,14,70,' ');
+                mvwaddch(window,15,70,' ');
+                mvwaddch(window,15,70,'_');
+                used=true;
+                }
                 
-    //         }
-    //         if(layout==3){
+            }
+            else if(layout==3 && !used){
+                if(Py>18 && Px>35 ){
+                mvwaddch(window,20,37,' ');
+                mvwaddch(window,20,38,' ');
+                mvwaddch(window,20,39,' ');
+                mvwaddch(window,20,40,' ');
+                mvwaddch(window,20,41,' ');
+                mvwaddch(window,20,42,' ');
+                used=true;
+                }
+            }
+            if(layout==0 && used){
+                mvwaddch(window,10,71,' ');
+                mvwaddch(window,11,71,' ');
+                mvwaddch(window,12,71,' ');
+                mvwaddch(window,12,71,'_');
+
+            }
+            else if(layout==1 && used){
+                mvwaddch(window,20,46,' ');
+                mvwaddch(window,20,47,' ');
+                mvwaddch(window,20,48,' ');
+                mvwaddch(window,20,49,' ');
+                mvwaddch(window,20,50,' ');
+                mvwaddch(window,20,51,' ');
                 
-    //         }
-    //     }
-    // }
+            }
+            else if(layout==2 && used){
+                mvwaddch(window,13,70,' ');
+                mvwaddch(window,14,70,' ');
+                mvwaddch(window,15,70,' ');
+                mvwaddch(window,15,70,'_');
+                
+            }
+            else if(layout==3 && used){
+                mvwaddch(window,20,37,' ');
+                mvwaddch(window,20,38,' ');
+                mvwaddch(window,20,39,' ');
+                mvwaddch(window,20,40,' ');
+                mvwaddch(window,20,41,' ');
+                mvwaddch(window,20,42,' ');
+                
+            }
+
+        }
+    }
 
 
 

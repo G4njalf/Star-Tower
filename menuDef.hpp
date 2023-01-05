@@ -17,7 +17,7 @@ public:
         win = w;
         //push = wgetch(win);
         strncpy(stringm1, "NEW GAME", 10);
-        strncpy(stringm2, "OPTIONS", 10);
+        strncpy(stringm2, "INFO", 10);
         strncpy(stringm3, "EXIT", 10);
         strncpy(stringm4, "PROGETTO  PROGRAMMAZIONE", 25);
     }
@@ -139,13 +139,13 @@ protected:
     char string7[length], string8[length];
 public:
     menu2(int curr, WINDOW* window) : menu1 (curr, window){
-        strncpy(string1, "DIFFICULTY:", 12);
-        strncpy(string2, "HARD", 5);
-        strncpy(string3, "NORMAL", 7);
-        strncpy(string4, "EASY", 5);
-        strncpy(string5, "EFFECTS/COLORS:", 16);
-        strncpy(string6, "ON", 3);
-        strncpy(string7, "OFF", 4);
+        strncpy(string1, "ARTEFATTI:", 11);
+        strncpy(string2, "HPUP", 5);
+        strncpy(string3, "COINS", 6);
+        strncpy(string4, "CHIAVE", 7);
+        strncpy(string5, "NEMICI:", 8);
+        strncpy(string6, "DISPLAY", 8);
+        strncpy(string7, "TIPI", 5);
         strncpy(string8, "<= BACK", 8);
     }
 
@@ -269,7 +269,7 @@ public:
                         move(21, 2);
                         clrtoeol();             //cancello la riga corrispondente
                         difficile = true;
-                        mvprintw(21, 2, "hai impostato la difficolta' difficile");
+                        mvprintw(21, 2, "si puo' raccogliere al prezzo di 100 score, aggiunge 50 hp");
                         move(3, 21);
                         refresh();
                     }
@@ -277,7 +277,7 @@ public:
                         move(21, 2);
                         clrtoeol();
                         normale = true;
-                        mvprintw(21, 2, "hai impostato la difficolta' normale");
+                        mvprintw(21, 2, "spawnano a gruppi, se raccolte aggiungono 10 punti score");
                         move(5, 21);
                         refresh();
                     }
@@ -285,7 +285,7 @@ public:
                         move(21, 2);
                         clrtoeol();
                         facile = true;
-                        mvprintw(21, 2, "hai impostato la difficolta' facile");
+                        mvprintw(21, 2, "la chiave spawna una volta uccisi tutti i nemici");
                         move(7, 21);
                         refresh();
                     }
@@ -293,7 +293,7 @@ public:
                         move(21, 2);
                         clrtoeol();
                         effettion = true;
-                        mvprintw(21, 2, "hai attivato gli effetti");
+                        mvprintw(21, 2, "R e' il carattere che rappresenta i nemici");
                         move(11, 21);
                         refresh();
                     }
@@ -301,7 +301,7 @@ public:
                         move(21, 2);
                         clrtoeol();
                         effettioff = true;
-                        mvprintw(21, 2, "hai rimosso gli effetti");
+                        mvprintw(21, 2, "sono sempre in movimento, spawnano con o senza arma");
                         move(13, 21);
                         refresh();
                     }
