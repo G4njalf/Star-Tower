@@ -2,7 +2,12 @@
 
 int main()
 {
-    //bool exit = menu(); // commenta sotto per menu e usa questo
-    bool exit = 0;
-    map(exit);
+    bool exit = menu(); 
+    
+    if (exit){
+        endwin();
+    }
+    else{
+        map(exit);
+    }
 }
