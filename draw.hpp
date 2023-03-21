@@ -23,13 +23,13 @@ void layouts(int x, WINDOW* room, coordinates cord, door doorx)
             coordinates cord;
             mvwprintw(room,1 ,1,"__|    |______________________________________________________________________");
             mvwprintw(room,2 ,1,"__|    |______________________________________________________________________");
-            mvwprintw(room,3 ,1,"__|    |______|                                                      |________");
-            mvwprintw(room,4 ,1,"__|    |______|                                                      |_L0_____");
-            mvwprintw(room,5 ,1,"__|    |______|     _________________                                |________");
-            mvwprintw(room,6 ,1,"__|    |______|    |_________________|                               |________");
-            mvwprintw(room,7 ,1,"__|                |_________________|                               |________");
-            mvwprintw(room,8 ,1,"__|                |_________________|                               |________");
-            mvwprintw(room,9 ,1,"__|________________|_________________|                               |________");
+            mvwprintw(room,3 ,1,"__|    |______|                                                     |_________");
+            mvwprintw(room,4 ,1,"__|    |______|                                                     |_________");
+            mvwprintw(room,5 ,1,"__|    |______|     _________________                               |_________");
+            mvwprintw(room,6 ,1,"__|    |______|    |_________________|                              |_________");
+            mvwprintw(room,7 ,1,"__|                |_________________|                              |_________");
+            mvwprintw(room,8 ,1,"__|                |_________________|                              |_________");
+            mvwprintw(room,9 ,1,"__|________________|_________________|                              |_________");
             mvwprintw(room,10,1,"_____________________________________|                                        ");
             mvwprintw(room,11,1,"_____________________________________|                                        ");
             mvwprintw(room,12,1,"_____________________________________|                                ________");
@@ -47,9 +47,9 @@ void layouts(int x, WINDOW* room, coordinates cord, door doorx)
             //porta da uscire LEFT (6 spazi se oriz , 3 spazi se verti)
            if (!doorx.LeftExitOpen)
             {
-                cord.columns = 22;
-                cord.rows = 20;
-                mvwhline(room,cord.rows,cord.columns,88,4);
+                cord.columns = 21;
+                cord.rows = 19;
+                mvwhline(room,cord.rows,cord.columns,88,6);
             }
             else
             {
@@ -63,7 +63,7 @@ void layouts(int x, WINDOW* room, coordinates cord, door doorx)
             //porta da uscire RIGHT (6 spazi se oriz , 3 spazi se verti)
            if (!doorx.RightExitOpen)
             {
-                cord.columns = 70;
+                cord.columns = 71;
                 cord.rows = 10;
                 mvwvline(room,cord.rows,cord.columns,88,3);
             }
@@ -92,7 +92,7 @@ void layouts(int x, WINDOW* room, coordinates cord, door doorx)
             mvwprintw(room,2 ,1,"__|    |______________________________________________________________________");
             mvwprintw(room,3 ,1,"__|    |______|                                                 |_____________");
             mvwprintw(room,4 ,1,"__|    |______|                                                 |_____________");
-            mvwprintw(room,5 ,1,"__|    |______|                                                 |_____L1______");
+            mvwprintw(room,5 ,1,"__|    |______|                                                 |_____________");
             mvwprintw(room,6 ,1,"__|                   _______________________________           |_____________");
             mvwprintw(room,7 ,1,"__|                  |_______________________________|                    |___");
             mvwprintw(room,8 ,1,"__|                  |_______________________________|                    |___");
@@ -160,7 +160,7 @@ void layouts(int x, WINDOW* room, coordinates cord, door doorx)
             mvwprintw(room,4 ,1,"_______________________________________________________|            |_________");
             mvwprintw(room,5 ,1,"____|                                                               |_________");
             mvwprintw(room,6 ,1,"____|                                                               |_________");
-            mvwprintw(room,7 ,1,"____|                                                               |___L2____");
+            mvwprintw(room,7 ,1,"____|                                                               |_________");
             mvwprintw(room,8 ,1,"____|                                                               |_________");
             mvwprintw(room,9 ,1,"____|                                                               |_________");
             mvwprintw(room,10,1,"                                                                    |_________");
@@ -223,7 +223,7 @@ void layouts(int x, WINDOW* room, coordinates cord, door doorx)
             mvwprintw(room,1 ,1,"______________________________________________________________________________");
             mvwprintw(room,2 ,1,"________________________________|                                          |__");
             mvwprintw(room,3 ,1,"______________________|                                                    |__"); 
-            mvwprintw(room,4 ,1,"____L3_____________|                                                          ");
+            mvwprintw(room,4 ,1,"___________________|                                                          ");
             mvwprintw(room,5 ,1,"___________________|                  ______________                          ");
             mvwprintw(room,6 ,1,"___________________|                 |______________|                      ___");
             mvwprintw(room,7 ,1,"___________________|                 |______________|                     |___");
